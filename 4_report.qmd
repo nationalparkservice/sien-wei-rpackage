@@ -1,0 +1,228 @@
+---
+title: "Well Data Report"
+subtitle: "Wetland Ecological Integrity Protocol"
+author: "Sierra Nevada Network Inventory and Monitoring Program"
+format:
+  html:
+    toc: true
+    toc-location: left
+---
+
+# Background Information
+
+The data in this report were collected for the Sierra Nevada Network (SIEN) Wetland Ecological Integrity (WEI) monitoring protocol (available from the [IRMA website](https://irma.nps.gov/DataStore/Reference/Profile/2251931)). The network encompasses three park units: Devils Postpile National Monument (DEPO), Sequoia-Kings Canyon National Park (SEKI), and Yosemite National Park (YOSE). The primary components to the SIEN WEI protocol are depth to water in shallow wells, wetland vegetation, and macroinvertebrate communities in fens and wet meadows. This report covers the discrete and continuous depth to water data for the 19 wells in the annual panel where loggers have been deployed. Figure 1 shows a map of the 19 well sites and additional locations where atmospheric pressure data have been collected.
+
+```{r map}
+#| fig-cap: "Map of annual panel wells and baro sites in SIEN (DEPO, SEKI, YOSE)"
+# siteMap()
+```
+
+# Devils Postpile National Monument(DEPO)
+
+## Location Information
+
+### Well Sites
+
+There is one monitored well in DEPO.
+
+```{r depo_wells}
+#| tbl-cap: "Well sites in DEPO"
+# siteInformation(park = "DEPO", type = "well")
+```
+
+### Baro Stations
+
+SIEN has never deployed any barologgers in DEPO. Atmospheric pressure data come from the weather station at Mammoth Yosemite Airport (available from [MesoWest website](https://mesowest.utah.edu/cgi-bin/droman/download_api2.cgi?stn=KMMH&hour1=17&min1=34&timetype=LOCAL&unit=0&graph=0)). 
+
+```{r depo_baro}
+# siteInformation(park = "DEPO", type = "baro")
+```
+
+## Atmospheric Pressure Data
+
+### Mammoth Yosemite Airport (KMMH)
+
+The weather station record extends from January 2008 to the present with no gaps.
+
+```{r kmmh}
+# continuousBaroData(site = "KMMH")
+```
+
+## Water Level Data
+
+### Wet Meadow 409 (Soda Springs)
+
+The well levelogger record is continuous from _______ to September 2024. There are no obvious problems with the record, although the logger was set to collect data once per day instead of once per hour from August 2023 to September 2024. The interval was reset to once per hour during the most recent visit in September 2024. All atmospheric pressure compensation data come from KMMH.
+
+```{r 409}
+# continuousWellLogger(well = "409")
+```
+
+# Sequoia-Kings Canyon National Park (SEKI)
+
+## Location Information
+
+### Well Sites
+
+There are ten monitored wells in the annual panel at SEKI.
+
+```{r seki_wells}
+# siteInformation(park = "SEKI", type = "well")
+```
+
+### Baro Stations
+
+SIEN has deployed three barologgers in SEKI. Additional atmospheric pressure data come from the weather station at State Lakes (available from [CDEC website](https://cdec.water.ca.gov/dynamicapp/staMeta?station_id=STL)). 
+
+```{r seki_baro}
+# siteInformation(park = "SEKI", type = "baro")
+```
+
+## Atmospheric Pressure Data
+
+### Baro 306 (Shorty's Meadow)
+
+The record begins in XXXX 2014. There is a gap from XXXX 2015 to XXX 2016 due to ________________. A new barologger was deployed in XXXX 2016. The barologger was successfully downloaded in August 2020. The same barologger was recovered during the next site visit in September 2024 but was unable to be downloaded, likely due to a dead battery. The barologger is currently being shipped to the manufacturer for troubleshooting. A replacement barologger was deployed in September 2024 and is currently logging.
+
+```{r 306b}
+# continuousBaroData(site = "306")
+```
+
+### Baro 315 (Lake South America)
+
+The record begins in XXXX 2014. A new barologger was deployed in XXXX 2016. The barologger was successfully downloaded in August 2020, which was the last time the site was visited. The barologger is currently logging.
+
+```{r 315b}
+# continuousBaroData(site = "315")
+```
+
+### Baro 308 (XXXX)
+
+No atmospheric pressure data have been collected yet from this site. A levelogger was deployed as a barologger by mistake in 20__. A barologger was deployed there in ______. The site has not been revisited since then, so the barologger has not yet been downloaded. Presumably, it is currently collecting data.
+
+```{r 308b, eval = FALSE}
+# continuousBaroData(site = "308")
+```
+
+### State Lakes (STL CDEQ)
+
+This is a relatively new weather station installed by the Army Corps of Engineers near State Lakes. The record extends from October 2023 to the present with no gaps.
+
+```{r STL}
+# continuousBaroData(site = "STL")
+```
+
+## Water Level Data
+
+### Fen 305 (Shorty's Meadow)
+
+```{r 305}
+# continuousWellLogger(well = "305")
+```
+
+### Wet Meadow 306 (Shorty's Meadow)
+
+```{r 306}
+# continuousWellLogger(well = "306")
+```
+
+### 308
+
+```{r 308}
+# continuousWellLogger(well = "308")
+```
+
+### 310
+
+```{r 310}
+# continuousWellLogger(well = "310")
+```
+
+### 314 (Lake South America)
+
+```{r 314}
+# continuousWellLogger(well = "314")
+```
+
+### 315 (Lake South America)
+
+```{r 315}
+# continuousWellLogger(well = "315")
+```
+
+### 319
+
+```{r 319}
+# continuousWellLogger(well = "319")
+```
+
+### 320
+
+```{r 320}
+# continuousWellLogger(well = "320")
+```
+
+### 345
+
+```{r 345}
+# continuousWellLogger(well = "345")
+```
+
+### 348
+
+```{r 348}
+# continuousWellLogger(well = "348")
+```
+
+# Yosemite National Park (YOSE)
+
+## Location Information
+
+### Well Sites
+
+There are eight monitored wells in the annual panel at YOSE.
+
+```{r yose_wells}
+# siteInformation(park = "YOSE", type = "well")
+```
+
+### Baro Stations
+
+There are three primary barologgers operated and maintained by park staff at YOSE. There is also one barologger operated and maintained by network staff at SIEN. 
+
+```{r yose_baro}
+# siteInformation(park = "YOSE", type = "baro")
+```
+
+## Atmospheric Pressure Data
+
+```{r yose_baro}
+```
+
+### BUGL
+
+```{r bugl}
+```
+
+### ILLI
+
+```{r illi}
+```
+
+### AHSC
+
+```{r ahsc}
+```
+
+### 214
+
+No atmospheric pressure data have been collected yet from this site. A levelogger was deployed as a barologger by mistake in 20__. A barologger was deployed there in ______. The site has not been revisited since then, so the barologger has not yet been downloaded. Presumably, it is currently collecting data.
+
+Unfortunately, the logger deployed from X to Y was a levelogger and not a barologger. The logger exhibited wild fluctuations during the summer months that may have been due to the logger sensitivity being designed for underwater deployment or to the logger being deployed in direct sunlight, which can overheat the logger and introduce error.
+
+## Water Level Data
+
+### Wet Meadow 322 (Porcupine Flat)
+
+### Fen 323 (Porcupine Flat)
+

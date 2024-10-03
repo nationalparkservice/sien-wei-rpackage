@@ -5,6 +5,11 @@ library(fetchaccess)
 
 pkg_globals <- new.env(parent = emptyenv())
 
+#' Read continuous data from Aquarius
+#'
+#' @return List of tibbles
+#' @export
+#'
 readAquarius <- function() {
 
   timeseries$connect("https://aquarius.nps.gov/aquarius", "aqreadonly", "aqreadonly")
@@ -150,12 +155,28 @@ readAquarius <- function() {
 
 }
 
+#' Read discrete data from Access database
+#'
+#' @return List of tibbles
+#' @export
+#'
 readAccess <- function() {
 
 
   return(data)
 }
 
+#' Load data into package environment
+#'
+#' @param data_path Path or URL to the data. Accepted inputs:
+#' * `"aquarius"` (connect to the Aquarius database)
+#' * `"database"` (connect to the Access database)
+#' @param use_default_sql Use default SQL database? Ignored if `data_path != "database"`.
+#' @param sql_drv Driver to use to connect to database. Ignored if `data_path != "database"`.
+#'
+#' @return Invisibly return a list containing all data
+#' @export
+#'
 loadWetlandWells <- function(data_path = c("database", "aquarius"),
                              use_default_sql = TRUE,
                              sql_drv = odbc::odbc()) {
@@ -200,12 +221,22 @@ loadWetlandWells <- function(data_path = c("database", "aquarius"),
   invisible(data)
 }
 
+# Load data from global package environment
 get_data <- function(data.name) {
   data <- get(data.name, pkg_globals)
 
   return(data)
 }
 
+#' Read wetland well data from all sources and filter by name of data frame
+#'
+#' @param data.name Name of the analysis view containing the data. E.g., "TimeseriesWaterLevel", "Site". See details for full list of data name options.
+#'
+#' @return Tibble of filtered data
+#' @export
+#'
+#' @details \code{data.name} options are: Site, Visit, TimeseriesWaterLevel, TimeseriesRawPressure, TimeseriesBaroPressure, TimeseriesWaterTemperature
+#'
 readAndFilterData <- function(data.name) {
   filtered_data <- get_data(data.name)
 

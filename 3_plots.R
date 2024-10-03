@@ -1,5 +1,10 @@
-
-# raw pressure, water temperature, and water level
+#' Generate well water level plot
+#'
+#' @param well Three-digit well code (e.g., 319)
+#'
+#' @return Ggplot object
+#' @export
+#'
 continuousWellLogger <- function(well) {
 
   data_import <- list$TimeseriesWaterLevel |>
@@ -33,7 +38,13 @@ continuousWellLogger <- function(well) {
 
 }
 
-# air pressure and air temperature
+#' Generate barometric pressure plot
+#'
+#' @param site Three- or four-digit site code (e.g., KMMH, 315)
+#'
+#' @return Ggplot object
+#' @export
+#'
 continuousBaroData <- function(site) {
 
   data_import <- list$TimeseriesBaroPressure |>

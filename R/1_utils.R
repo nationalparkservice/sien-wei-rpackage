@@ -5,6 +5,13 @@ library(fetchaccess)
 
 pkg_globals <- new.env(parent = emptyenv())
 
+# Load data from global package environment
+get_data <- function(data.name) {
+  data <- get(data.name, pkg_globals)
+
+  return(data)
+}
+
 #' Read continuous data from Aquarius
 #'
 #' @return List of tibbles
@@ -91,7 +98,7 @@ readAquarius <- function() {
   }
 
   raw_data <- list(raw_data)
-  names(raw_data) <- "TimeseriesRawPressure"
+  names(raw_data) <- "TimeseriesRawLevel"
 
   for (location in well) {
     import <- timeseries$getTimeSeriesData(paste0("Groundwater Temp at Depth.Water Temp@", location))
@@ -162,8 +169,7 @@ readAquarius <- function() {
 #'
 readAccess <- function() {
 
-
-  return(data)
+#  return(data)
 }
 
 #' Load data into package environment
@@ -183,23 +189,23 @@ loadWetlandWells <- function(data_path = c("database", "aquarius"),
 
   # Figure out the format of the data
   is_aquarius <- ifelse(any(grepl("^aquarius$", data_path, ignore.case = TRUE) == TRUE), TRUE, FALSE)
-  is_access <- ifelse(any(grepl("^database$", data_path, ignore.case = TRUE) == TRUE), TRUE, FALSE)
-  if (!is_agol & !is_access) {
-    # Standardize data path
-    data_path <- normalizePath(data_path[1], mustWork = TRUE)
-  }
+  # is_access <- ifelse(any(grepl("^database$", data_path, ignore.case = TRUE) == TRUE), TRUE, FALSE)
+  # if (!is_access) {
+  #   # Standardize data path
+  #   data_path <- normalizePath(data_path[1], mustWork = TRUE)
+  # }
 
   data <- list()
 
   if(is_aquarius) { # Read from Aquarius
-    aquarius <- readAquarius(...)
+    aquarius <- readAquarius()
     data <- append(data, aquarius)
   }
 
-  if (is_access) {  # Read from SQL Server database
-    access <- readAccess(...)
-    data <- append(data, access)
-  }
+  # if(is_access) {  # Read from Access database
+  #   access <- readAccess()
+  #   data <- append(data, access)
+  # }
 
   # Tidy up the data
   data <- lapply(data, function(df) {
@@ -219,13 +225,6 @@ loadWetlandWells <- function(data_path = c("database", "aquarius"),
   lapply(tbl_names, function(n) {assign(n, data[[n]], envir = pkg_globals)})
 
   invisible(data)
-}
-
-# Load data from global package environment
-get_data <- function(data.name) {
-  data <- get(data.name, pkg_globals)
-
-  return(data)
 }
 
 #' Read wetland well data from all sources and filter by name of data frame

@@ -169,7 +169,21 @@ readAquarius <- function() {
 #'
 readAccess <- function() {
 
-#  return(data)
+  db <- "M:/STAFF/BailardJ/SIEN Detail/SIEN_Wells.accdb"
+
+  data <-fetchaccess::fetchFromAccess(db)$data
+
+  data$Site <- data$Site |>
+    dplyr::mutate(SiteShort = dplyr::case_when(!is.na(WellNumber) ~ as.character(WellNumber),
+                                               grepl("CDEC", Identifier) ~ stringr::str_sub(Identifier, start = -3),
+                                               grepl("MesoWest", Identifier) ~ stringr::str_sub(Identifier, start = -4),
+                                               TRUE ~ stringr::str_sub(Identifier, start = -4))) |>
+    dplyr::mutate(SiteType = dplyr::case_when(Type %in% c("WetMeadow", "Fen") ~ "Well",
+                                              Type %in% c("Barometric") ~ "Baro",
+                                              TRUE ~ NA_character_))
+
+  return(data)
+
 }
 
 #' Load data into package environment
@@ -189,11 +203,11 @@ loadWetlandWells <- function(data_path = c("database", "aquarius"),
 
   # Figure out the format of the data
   is_aquarius <- ifelse(any(grepl("^aquarius$", data_path, ignore.case = TRUE) == TRUE), TRUE, FALSE)
-  # is_access <- ifelse(any(grepl("^database$", data_path, ignore.case = TRUE) == TRUE), TRUE, FALSE)
-  # if (!is_access) {
-  #   # Standardize data path
-  #   data_path <- normalizePath(data_path[1], mustWork = TRUE)
-  # }
+  is_access <- ifelse(any(grepl("^database$", data_path, ignore.case = TRUE) == TRUE), TRUE, FALSE)
+  if (!is_access) {
+    # Standardize data path
+    data_path <- normalizePath(data_path[1], mustWork = TRUE)
+  }
 
   data <- list()
 
@@ -202,10 +216,10 @@ loadWetlandWells <- function(data_path = c("database", "aquarius"),
     data <- append(data, aquarius)
   }
 
-  # if(is_access) {  # Read from Access database
-  #   access <- readAccess()
-  #   data <- append(data, access)
-  # }
+  if(is_access) {  # Read from Access database
+     access <- readAccess()
+     data <- append(data, access)
+  }
 
   # Tidy up the data
   data <- lapply(data, function(df) {

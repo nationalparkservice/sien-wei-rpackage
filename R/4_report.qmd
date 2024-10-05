@@ -9,7 +9,8 @@ format:
 ---
 
 ```{r setup}
-# loadWetlandWells() # Load data and functions
+library(wetlandwells)
+loadWetlandWells() # Load data and functions
 ```
 
 # Background Information
@@ -19,7 +20,7 @@ The data in this report were collected for the Sierra Nevada Network (SIEN) Wetl
 ```{r map}
 #| fig-cap: "Map of annual panel wells and baro sites in SIEN (DEPO, SEKI, YOSE)"
 #| fig-alt: "Yosemite is the northern-most park in the network, in the central Sierra Nevada mountains of California. There are eight wells and four baro sites. Devils Postpile is a small monument located just to the south of Yosemite in the eastern Sierra. There is one well in the park and one baro site just outside the park in Mammoth. Sequoia-Kings Canyon is the southern-most park in the network, in the southern Sierra. There are ten wells and four baro sites. Some wells are installed in wet meadows and some in fens."
-# siteMap()
+siteMap()
 ```
 
 ## Barometric Compensation
@@ -42,7 +43,20 @@ There is one monitored well in DEPO.
 
 ```{r depo_wells}
 #| tbl-cap: "Well sites in DEPO"
-# siteInformation(park = "DEPO", type = "well")
+t <- siteInformation(park = "DEPO", type = "Well")
+
+t |>
+  reactable::reactable(
+      sortable = TRUE,
+      filterable = TRUE,
+      compact = TRUE,
+      striped = TRUE,
+      bordered = TRUE,
+      highlight = TRUE,
+      resizable = TRUE,
+      defaultColDef = reactable::colDef(
+        header = function(value) snakecase::to_title_case(value))
+      )
 ```
 
 ### Baro Stations
@@ -51,7 +65,7 @@ SIEN has never deployed any barologgers in DEPO. Atmospheric pressure data come 
 
 ```{r depo_baro}
 #| tbl-cap: "Baro sites in DEPO"
-# siteInformation(park = "DEPO", type = "baro")
+siteInformation(park = "DEPO", type = "Baro")
 ```
 
 ## Atmospheric Pressure Data
@@ -62,7 +76,7 @@ The weather station record extends from January 2008 to the present with no gaps
 
 ```{r kmmh}
 #| fig-cap: "Barometric pressure record for KMMH"
-# continuousBaroPressure(site = "KMMH")
+continuousBaroPressure(site = "KMMH")
 ```
 
 ## Water Level Data
@@ -75,17 +89,17 @@ Published data are available [here](https://irma.nps.gov/aqwebportal/Data/DataSe
 
 ```{r 409 plot}
 #| fig-cap: "Water level record for well 409"
-# continuousWellLogger(well = "409")
+continuousWaterLevel(well = "409")
 ```
 
 ```{r 409 visits}
 #| tbl-cap: "Site visit data for well 409"
-# discreteVisitData(well = "409")
+discreteVisitData(well = "409")
 ```
 
 ```{r 409 loggers}
 #| tbl-cap: "Logger deployment data for well 409"
-# loggerDeployments(well = "409")
+loggerDeployments(well = "409")
 ```
 
 # Sequoia-Kings Canyon National Park (SEKI)

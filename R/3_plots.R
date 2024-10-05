@@ -174,8 +174,109 @@ plotDaysWithinSurface <- function(well) {
     ggplot2::scale_fill_manual(values = c("Within10cm" = "navy",
                                           "Within50cm" = "dodgerblue")) +
     ggplot2::labs(x = "Water Year",
-                  y = "Percentage of Days in the Year") +
+                  y = "Percentage of Days in the Year",
+                  title = paste0(unique(data_reshaped$Park, " Well ", well))) +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::scale_x_continuous(breaks = min(data_reshaped$WaterYear):max(data_reshaped$WaterYear))
 
+  return(plot)
+}
+
+#' Generate map of well and baro sites
+#'
+#' @return Leaflet object
+#' @export
+#'
+siteMap <- function() {
+
+  site_import <- readAndFilterData(data.name = "Site")
+
+  coords <- site_import |>
+    dplyr::mutate(SiteName = dplyr::case_when(Type == "Barometric" ~ WetlandName,
+                                              TRUE ~ NA_character_)) |>
+    dplyr::mutate(Category = dplyr::case_when(Type == "Barometric" ~ "Baro",
+                                              Type %in% c("Fen", "WetMeadow") ~ "Well",
+                                              TRUE ~ NA_character_)) |>
+    dplyr::select(Identifier,
+                  Park,
+                  Panel,
+                  WetlandNumber,
+                  WellNumber,
+                  WetlandName,
+                  SiteShort,
+                  SiteName,
+                  Category,
+                  Type,
+                  Latitude,
+                  Longitude,
+                  Easting,
+                  Northing,
+                  Elevation_m) |>
+    dplyr::mutate(CategoryRadius = dplyr::case_when(Category == "Well" ~ 5,
+                                                    Category == "Baro" ~ 3,
+                                                    TRUE ~ 3))
+
+  coords$Category <- factor(coords$Category, levels = c("Well", "Baro"))
+  coords$Type <- factor(coords$Type, levels = c("Fen", "WetMeadow", "Barometric"))
+
+  coords <- coords |> dplyr::arrange(desc(Category))
+
+  pal <- leaflet::colorFactor(palette = c("royalblue1", "firebrick"),
+                              domain = coords$Category)
+
+  # Make NPS map Attribution
+  NPSAttrib <-
+    htmltools::HTML(
+      "<a href='https://www.nps.gov/npmap/disclaimer/'>Disclaimer</a> |
+      &copy; <a href='http://mapbox.com/about/maps' target='_blank'>Mapbox</a>
+      &copy; <a href='http://openstreetmap.org/copyright' target='_blank'>OpenStreetMap</a> contributors |
+      <a class='improve-park-tiles'
+      href='http://insidemaps.nps.gov/places/editor/#background=mapbox-satellite&map=4/-95.97656/39.02772&overlays=park-tiles-overlay'
+      target='_blank'>Improve Park Tiles</a>"
+    )
+
+  NPSbasic = "https://atlas-stg.geoplatform.gov/styles/v1/atlas-user/ck58pyquo009v01p99xebegr9/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYXRsYXMtdXNlciIsImEiOiJjazFmdGx2bjQwMDAwMG5wZmYwbmJwbmE2In0.lWXK2UexpXuyVitesLdwUg"
+  NPSimagery = "https://atlas-stg.geoplatform.gov/styles/v1/atlas-user/ck72fwp2642dv07o7tbqinvz4/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYXRsYXMtdXNlciIsImEiOiJjazFmdGx2bjQwMDAwMG5wZmYwbmJwbmE2In0.lWXK2UexpXuyVitesLdwUg"
+  NPSslate = "https://atlas-stg.geoplatform.gov/styles/v1/atlas-user/ck5cpvc2e0avf01p9zaw4co8o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYXRsYXMtdXNlciIsImEiOiJjazFmdGx2bjQwMDAwMG5wZmYwbmJwbmE2In0.lWXK2UexpXuyVitesLdwUg"
+  NPSlight = "https://atlas-stg.geoplatform.gov/styles/v1/atlas-user/ck5cpia2u0auf01p9vbugvcpv/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYXRsYXMtdXNlciIsImEiOiJjazFmdGx2bjQwMDAwMG5wZmYwbmJwbmE2In0.lWXK2UexpXuyVitesLdwUg"
+
+  # width <- 700
+  # height <- 700
+
+  sitemap <- leaflet::leaflet(coords # ,
+                              # width = width # ,
+                              # height = height
+  ) |>
+    leaflet::addTiles(group = "Basic", urlTemplate = NPSbasic, attribution = NPSAttrib) |>
+    leaflet::addTiles(group = "Imagery", urlTemplate = NPSimagery, attribution = NPSAttrib) |>
+    leaflet::addTiles(group = "Slate", urlTemplate = NPSslate, attribution = NPSAttrib) |>
+    leaflet::addTiles(group = "Light", urlTemplate = NPSlight, attribution = NPSAttrib) |>
+    leaflet::addScaleBar('bottomright') |>
+    leaflet::addCircleMarkers(lng = ~Longitude,
+                              lat = ~Latitude,
+                              popup = paste ("Identifier: ", coords$Identifier, "<br>",
+                                             "Wetland or Site Name: ", coords$WetlandName, "<br>",
+                                             "Well Number or Site Code: ", coords$SiteShort, "<br>",
+                                             "Panel: ", coords$Panel, "<br>",
+                                             "Latitude (UTM): ", coords$Northing, "<br>",
+                                             "Longitude (UTM): ", coords$Easting, "<br>",
+                                             "Latitude (Decimal Degrees): ", coords$Latitude, "<br>",
+                                             "Longitude (Decimal Degrees): ", coords$Longitude),
+                              radius = ~CategoryRadius,
+                              stroke = TRUE,
+                              color = "black",
+                              weight = 2,
+                              fillOpacity = 0.8,
+                              fillColor = ~pal(Category),
+                              group = ~Category) |>
+    leaflet::addLegend(pal = pal,
+                       values = ~Category,
+                       title = "Site Type",
+                       opacity = 1,
+                       position = "bottomleft") |>
+    leaflet::addLayersControl(baseGroups = c("Basic", "Imagery", "Slate", "Light"),
+                              overlayGroups = ~Category,
+                              options=leaflet::layersControlOptions(collapsed = FALSE))
+
+  return(sitemap)
 }

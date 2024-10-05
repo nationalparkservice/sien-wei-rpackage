@@ -217,7 +217,8 @@ window.Quarto = {
 
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loadWetlandWells() # Load data and functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wetlandwells)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">loadWetlandWells</span>() <span class="co"># Load data and functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="background-information" class="level1">
 <h1>Background Information</h1>
@@ -241,14 +242,28 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="well-sites">Well Sites</h3>
 <p>There is one monitored well in DEPO.</p>
 <div class="cell" data-tbl-cap="Well sites in DEPO">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># siteInformation(park = "DEPO", type = "well")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">siteInformation</span>(<span class="at">park =</span> <span class="st">"DEPO"</span>, <span class="at">type =</span> <span class="st">"Well"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 11
+  Identifier Park  WetlandNumber WellNumber WetlandName Type  Latitude Longitude
+  &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;      &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 SIEN_WEI_… DEPO              1        409 Soda Creek  WetM…     37.6     -119.
+# ℹ 3 more variables: Easting &lt;dbl&gt;, Northing &lt;dbl&gt;, Elevation_m &lt;dbl&gt;</code></pre>
+</div>
 </div>
 </section>
 <section id="baro-stations" class="level3">
 <h3 class="anchored" data-anchor-id="baro-stations">Baro Stations</h3>
 <p>SIEN has never deployed any barologgers in DEPO. Atmospheric pressure data come from the weather station at Mammoth Yosemite Airport (available from <a href="https://mesowest.utah.edu/cgi-bin/droman/download_api2.cgi?stn=KMMH&amp;hour1=17&amp;min1=34&amp;timetype=LOCAL&amp;unit=0&amp;graph=0">MesoWest website</a>).</p>
 <div class="cell" data-tbl-cap="Baro sites in DEPO">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># siteInformation(park = "DEPO", type = "baro")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">siteInformation</span>(<span class="at">park =</span> <span class="st">"DEPO"</span>, <span class="at">type =</span> <span class="st">"Baro"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 9
+  Identifier        Park  SiteShort SiteName Latitude Longitude Easting Northing
+  &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+1 SIEN_WEI_DEPO_Me… DEPO  KMMH      Mammoth…     37.6     -119.      NA       NA
+# ℹ 1 more variable: Elevation_m &lt;dbl&gt;</code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -258,7 +273,15 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="mammoth-yosemite-airport-kmmh">Mammoth Yosemite Airport (KMMH)</h3>
 <p>The weather station record extends from January 2008 to the present with no gaps.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "KMMH")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">continuousBaroPressure</span>(<span class="at">site =</span> <span class="st">"KMMH"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="4_report_files/figure-html/kmmh-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Barometric pressure record for KMMH</figcaption>
+</figure>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -269,13 +292,64 @@ window.Quarto = {
 <p>The well levelogger record is continuous from late August 2014 to September 2024. There are no obvious problems with the record, although the logger was set to collect data once per day instead of once per hour from August 2023 to September 2024. The interval was reset to once per hour during the most recent visit in September 2024. All atmospheric pressure compensation data come from KMMH.</p>
 <p>Published data are available <a href="https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_DEPO_Well-409/DataSet/Water%20Level/BaroCompensated/Interval/AllData">here</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWellLogger(well = "409")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">continuousWaterLevel</span>(<span class="at">well =</span> <span class="st">"409"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="4_report_files/figure-html/409%20plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Water level record for well 409</figcaption>
+</figure>
+</div>
+</div>
 </div>
 <div class="cell" data-tbl-cap="Site visit data for well 409">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># discreteVisitData(well = "409")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">discreteVisitData</span>(<span class="at">well =</span> <span class="st">"409"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 17
+   Identifier        Park  WetlandNumber WellNumber WetlandName Type  VisitDate 
+   &lt;chr&gt;             &lt;chr&gt;         &lt;int&gt;      &lt;int&gt; &lt;chr&gt;       &lt;chr&gt; &lt;date&gt;    
+ 1 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2014-08-24
+ 2 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2015-08-05
+ 3 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2016-08-22
+ 4 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2017-08-26
+ 5 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2018-08-25
+ 6 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2019-08-14
+ 7 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2020-07-15
+ 8 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2020-10-23
+ 9 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2021-09-15
+10 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2022-07-14
+11 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2023-08-02
+12 SIEN_WEI_DEPO_We… DEPO              1        409 Soda Creek  WetM… 2024-09-13
+# ℹ 10 more variables: ArrivalTime &lt;chr&gt;, Arrival_DepthToGroundFromMP_cm &lt;dbl&gt;,
+#   Arrival_DepthToWaterFromMP_cm &lt;dbl&gt;,
+#   Arrival_DepthToWaterFromGround_cm &lt;dbl&gt;, Arrival_CableLength_cm &lt;dbl&gt;,
+#   Departure_DepthToGroundFromMP_cm &lt;dbl&gt;,
+#   Departure_DepthToWaterFromMP_cm &lt;dbl&gt;,
+#   Departure_DepthToWaterFromGround_cm &lt;dbl&gt;, Departure_CableLength_cm &lt;dbl&gt;,
+#   WellConditionNotes &lt;chr&gt;</code></pre>
+</div>
 </div>
 <div class="cell" data-tbl-cap="Logger deployment data for well 409">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loggerDeployments(well = "409")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loggerDeployments</span>(<span class="at">well =</span> <span class="st">"409"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 11
+   Identifier   Park  WellNumber WetlandName VisitDate  SerialNumber Model Type 
+   &lt;chr&gt;        &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;       &lt;date&gt;            &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+ 1 SIEN_WEI_DE… DEPO         409 Soda Creek  2014-08-24      1034997 Gold  Leve…
+ 2 SIEN_WEI_DE… DEPO         409 Soda Creek  2015-08-05      1034997 Gold  Leve…
+ 3 SIEN_WEI_DE… DEPO         409 Soda Creek  2016-08-22      1034997 Gold  Leve…
+ 4 SIEN_WEI_DE… DEPO         409 Soda Creek  2017-08-26      2060230 Edge  Leve…
+ 5 SIEN_WEI_DE… DEPO         409 Soda Creek  2018-08-25      2060230 Edge  Leve…
+ 6 SIEN_WEI_DE… DEPO         409 Soda Creek  2019-08-14      2060230 Edge  Leve…
+ 7 SIEN_WEI_DE… DEPO         409 Soda Creek  2020-07-15      2060230 Edge  Leve…
+ 8 SIEN_WEI_DE… DEPO         409 Soda Creek  2020-10-23      2060230 Edge  Leve…
+ 9 SIEN_WEI_DE… DEPO         409 Soda Creek  2021-09-15      2060230 Edge  Leve…
+10 SIEN_WEI_DE… DEPO         409 Soda Creek  2022-07-14      2060230 Edge  Leve…
+11 SIEN_WEI_DE… DEPO         409 Soda Creek  2023-08-02      2125004 5     Leve…
+12 SIEN_WEI_DE… DEPO         409 Soda Creek  2024-09-13      2125004 5     Leve…
+# ℹ 3 more variables: DeploymentDate &lt;date&gt;, DeploymentTime &lt;chr&gt;,
+#   DeploymentNotes &lt;chr&gt;</code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -288,14 +362,14 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="well-sites-1">Well Sites</h3>
 <p>There are ten monitored wells in the annual panel at SEKI.</p>
 <div class="cell" data-tbl-cap="Well sites in SEKI">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># siteInformation(park = "SEKI", type = "well")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># siteInformation(park = "SEKI", type = "well")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="baro-stations-1" class="level3">
 <h3 class="anchored" data-anchor-id="baro-stations-1">Baro Stations</h3>
 <p>SIEN has deployed three barologgers in SEKI. Additional atmospheric pressure data come from the weather station at State Lakes (available from <a href="https://cdec.water.ca.gov/dynamicapp/staMeta?station_id=STL">CDEC website</a>).</p>
 <div class="cell" data-tbl-cap="Baro sites in SEKI">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># siteInformation(park = "SEKI", type = "baro")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># siteInformation(park = "SEKI", type = "baro")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -305,28 +379,28 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="baro-306-shortys-meadow">Baro 306 (Shorty’s Meadow)</h3>
 <p>The record begins in XXXX 2014. There is a gap from XXXX 2015 to XXX 2016 due to ________________. A new barologger was deployed in XXXX 2016. The barologger was successfully downloaded in August 2020. The same barologger was recovered during the next site visit in September 2024 but was unable to be downloaded, likely due to a dead battery. The barologger is currently being shipped to the manufacturer for troubleshooting. A replacement barologger was deployed in September 2024 and is currently logging.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "306")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "306")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="baro-315-lake-south-america" class="level3">
 <h3 class="anchored" data-anchor-id="baro-315-lake-south-america">Baro 315 (Lake South America)</h3>
 <p>The record begins in XXXX 2014. A new barologger was deployed in XXXX 2016. The barologger was successfully downloaded in August 2020, which was the last time the site was visited. The barologger is currently logging.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "315")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "315")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="baro-308-lower-dusy-basin" class="level3">
 <h3 class="anchored" data-anchor-id="baro-308-lower-dusy-basin">Baro 308 (Lower Dusy Basin)</h3>
 <p>No atmospheric pressure data have been collected yet from this site. A levelogger was deployed as a barologger by mistake in 20_<em>. A barologger was deployed there in </em>_____. The site has not been revisited since then, so the barologger has not yet been downloaded. Presumably, it is currently collecting data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "308")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "308")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="state-lakes-stl-cdeq" class="level3">
 <h3 class="anchored" data-anchor-id="state-lakes-stl-cdeq">State Lakes (STL CDEQ)</h3>
 <p>This is a relatively new weather station installed by the Army Corps of Engineers near State Lakes. The record extends from October 2023 to the present with no gaps.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "STL")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "STL")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -335,61 +409,61 @@ window.Quarto = {
 <section id="wet-meadow-308-lower-dusy-basin" class="level3">
 <h3 class="anchored" data-anchor-id="wet-meadow-308-lower-dusy-basin">Wet Meadow 308 (Lower Dusy Basin)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "308")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "308")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fen-305-shortys-meadow" class="level3">
 <h3 class="anchored" data-anchor-id="fen-305-shortys-meadow">Fen 305 (Shorty’s Meadow)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "305")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "305")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="wet-meadow-306-shortys-meadow" class="level3">
 <h3 class="anchored" data-anchor-id="wet-meadow-306-shortys-meadow">Wet Meadow 306 (Shorty’s Meadow)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "306")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "306")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fen-319-silliman" class="level3">
 <h3 class="anchored" data-anchor-id="fen-319-silliman">Fen 319 (Silliman)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "319")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "319")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="wet-meadow-320-silliman" class="level3">
 <h3 class="anchored" data-anchor-id="wet-meadow-320-silliman">Wet Meadow 320 (Silliman)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "320")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "320")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="wet-meadow-310-windy-gap" class="level3">
 <h3 class="anchored" data-anchor-id="wet-meadow-310-windy-gap">Wet Meadow 310 (Windy Gap)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "310")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "310")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fen-345-hay-meadow" class="level3">
 <h3 class="anchored" data-anchor-id="fen-345-hay-meadow">Fen 345 (Hay Meadow)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "345")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "345")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="wet-meadow-348-hay-meadow" class="level3">
 <h3 class="anchored" data-anchor-id="wet-meadow-348-hay-meadow">Wet Meadow 348 (Hay Meadow)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "348")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "348")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="wet-meadow-314-lake-south-america" class="level3">
 <h3 class="anchored" data-anchor-id="wet-meadow-314-lake-south-america">Wet Meadow 314 (Lake South America)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "314")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "314")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fen-315-lake-south-america" class="level3">
 <h3 class="anchored" data-anchor-id="fen-315-lake-south-america">Fen 315 (Lake South America)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "315")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "315")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -402,14 +476,14 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="well-sites-2">Well Sites</h3>
 <p>There are eight monitored wells in the annual panel at YOSE.</p>
 <div class="cell" data-tbl-cap="Well sites in YOSE">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># siteInformation(park = "YOSE", type = "well")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># siteInformation(park = "YOSE", type = "well")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="baro-stations-2" class="level3">
 <h3 class="anchored" data-anchor-id="baro-stations-2">Baro Stations</h3>
 <p>There are three primary barologgers operated and maintained by park staff at YOSE. There is also one barologger operated and maintained by network staff at SIEN.</p>
 <div class="cell" data-tbl-cap="Baro sites in YOSE">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># siteInformation(park = "YOSE", type = "baro")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># siteInformation(park = "YOSE", type = "baro")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -418,19 +492,19 @@ window.Quarto = {
 <section id="bug-camp-bugl" class="level3">
 <h3 class="anchored" data-anchor-id="bug-camp-bugl">Bug Camp (BUGL)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "BUGL")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "BUGL")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="illilouette-creek-illi" class="level3">
 <h3 class="anchored" data-anchor-id="illilouette-creek-illi">Illilouette Creek (ILLI)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "ILLI")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "ILLI")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="above-high-sierra-camp-ahsc" class="level3">
 <h3 class="anchored" data-anchor-id="above-high-sierra-camp-ahsc">Above High Sierra Camp (AHSC)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "AHSC")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "AHSC")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="baro-214-kendrick-creek" class="level3">
@@ -438,7 +512,7 @@ window.Quarto = {
 <p>No atmospheric pressure data have been collected yet from this site. A levelogger was deployed as a barologger by mistake in 20_<em>. A barologger was deployed there in </em>_____. The site has not been revisited since then, so the barologger has not yet been downloaded. Presumably, it is currently collecting data.</p>
 <p>Unfortunately, the logger deployed from X to Y was a levelogger and not a barologger. The logger exhibited wild fluctuations during the summer months that may have been due to the logger sensitivity being designed for underwater deployment or to the logger being deployed in direct sunlight, which can overheat the logger and introduce error.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "214")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousBaroPressure(site = "214")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -447,49 +521,49 @@ window.Quarto = {
 <section id="wet-meadow-214-kendrick-creek" class="level3">
 <h3 class="anchored" data-anchor-id="wet-meadow-214-kendrick-creek">Wet Meadow 214 (Kendrick Creek)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "214")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "214")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="wet-meadow-224-bridalveil" class="level3">
 <h3 class="anchored" data-anchor-id="wet-meadow-224-bridalveil">Wet Meadow 224 (Bridalveil)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "224")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "224")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="wet-meadow-301-echo-creek" class="level3">
 <h3 class="anchored" data-anchor-id="wet-meadow-301-echo-creek">Wet Meadow 301 (Echo Creek)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "301")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "301")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fen-327-echo-creek" class="level3">
 <h3 class="anchored" data-anchor-id="fen-327-echo-creek">Fen 327 (Echo Creek)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "327")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "327")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="wet-meadow-313-budd-creek" class="level3">
 <h3 class="anchored" data-anchor-id="wet-meadow-313-budd-creek">Wet Meadow 313 (Budd Creek)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "313")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "313")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fen-328-bridalveil" class="level3">
 <h3 class="anchored" data-anchor-id="fen-328-bridalveil">Fen 328 (Bridalveil)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "328")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "328")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="wet-meadow-322-porcupine-flat" class="level3">
 <h3 class="anchored" data-anchor-id="wet-meadow-322-porcupine-flat">Wet Meadow 322 (Porcupine Flat)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "322")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "322")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fen-323-porcupine-flat" class="level3">
 <h3 class="anchored" data-anchor-id="fen-323-porcupine-flat">Fen 323 (Porcupine Flat)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "323")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuousWaterLevel(well = "323")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>

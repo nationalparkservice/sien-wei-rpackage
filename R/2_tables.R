@@ -71,7 +71,9 @@ discreteVisitData <- function(well) {
                   Departure_DepthToWaterFromMP_cm,
                   Departure_DepthToWaterFromGround_cm,
                   Departure_CableLength_cm,
-                  WellConditionNotes)
+                  WellConditionNotes) |>
+    dplyr::mutate(Arrival_DepthToWaterFromGround_cm = Arrival_DepthToWaterFromMP_cm - Arrival_DepthToGroundFromMP_cm,
+                  Departure_DepthToWaterFromGround_cm = Departure_DepthToWaterFromMP_cm - Departure_DepthToGroundFromMP_cm)
 
   return(data_table)
 }
@@ -86,6 +88,7 @@ discreteVisitData <- function(well) {
 #'
 loggerDeployments <- function(well, site) {
 
+  dp_import <- readAndFilterData(data.name = "Deployment")
   rc_import <- readAndFilterData(data.name = "Recovery")
   sens_import <- readAndFilterData(data.name = "Sensor")
   site_import <- readAndFilterData(data.name = "Site")
@@ -93,12 +96,19 @@ loggerDeployments <- function(well, site) {
   site_import <- site_import |>
     dplyr::select(Identifier, WetlandNumber, WellNumber, WetlandName, SiteShort)
 
-  data_joined <- sens_import |>
-    dplyr::left_join(site_import, by = "Identifier", relationship = "many-to-many")
+  sens_import <- sens_import |>
+    dplyr::select(SerialNumber, Model, Type) |>
+    unique()
+
+  data_joined <- dp_import |>
+    dplyr::left_join(site_import, by = "Identifier", relationship = "many-to-many") |>
+    dplyr::left_join(sens_import, by = "SerialNumber", relationship = "many-to-one")
 
   if(!missing(well)) {
     data_table <- data_joined |>
-      dplyr::filter(SiteShort %in% well) |>
+      dplyr::filter(SiteShort %in% well,
+                    Subsite == "Well"
+                    ) |>
       dplyr::select(Identifier,
                     Park,
                     WellNumber,
@@ -109,10 +119,13 @@ loggerDeployments <- function(well, site) {
                     Type,
                     DeploymentDate,
                     DeploymentTime,
-                    DeploymentNotes)
+                    DeploymentNotes) |>
+      unique()
   } else if(!missing(site)) {
-    data_import <- data_joined |>
-      dplyr::filter(SiteShort %in% site) |>
+    data_table <- data_joined |>
+      dplyr::filter(SiteShort %in% site,
+                    Subsite == "Baro"
+                    ) |>
       dplyr::select(Identifier,
                     Park,
                     SiteShort,
@@ -123,7 +136,8 @@ loggerDeployments <- function(well, site) {
                     Type,
                     DeploymentDate,
                     DeploymentTime,
-                    DeploymentNotes)
+                    DeploymentNotes) |>
+      unique()
   } else {
     data_table <- data_joined |>
       dplyr::select(Identifier,

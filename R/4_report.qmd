@@ -2,10 +2,13 @@
 title: "Well Data Report"
 subtitle: "Wetland Ecological Integrity Protocol"
 author: "Sierra Nevada Network Inventory and Monitoring Program"
+execute: 
+  echo: false
 format:
   html:
     toc: true
     toc-location: left
+tbl-cap-location: top
 ---
 
 ```{r setup}
@@ -17,7 +20,8 @@ loadWetlandWells() # Load data and functions
 
 The data in this report were collected for the Sierra Nevada Network (SIEN) Wetland Ecological Integrity (WEI) monitoring protocol (available from the [IRMA website](https://irma.nps.gov/DataStore/Reference/Profile/2251931)). The network encompasses three park units: Devils Postpile National Monument (DEPO), Sequoia-Kings Canyon National Park (SEKI), and Yosemite National Park (YOSE). The primary components to the SIEN WEI protocol are depth to water in shallow wells, wetland vegetation, and macroinvertebrate communities in fens and wet meadows. This report covers the discrete and continuous depth to water data for the 19 wells in the annual panel where loggers have been deployed. Figure 1 shows a map of the 19 well sites and additional locations where atmospheric pressure data have been collected.
 
-```{r map}
+```{r, warning = FALSE}
+#| label: fig-sitemap
 #| fig-cap: "Map of annual panel wells and baro sites in SIEN (DEPO, SEKI, YOSE)"
 #| fig-alt: "Yosemite is the northern-most park in the network, in the central Sierra Nevada mountains of California. There are eight wells and four baro sites. Devils Postpile is a small monument located just to the south of Yosemite in the eastern Sierra. There is one well in the park and one baro site just outside the park in Mammoth. Sequoia-Kings Canyon is the southern-most park in the network, in the southern Sierra. There are ten wells and four baro sites. Some wells are installed in wet meadows and some in fens."
 siteMap()
@@ -41,9 +45,14 @@ $Barometric compensated water level (cm) = Raw water column equivalent (cm) + (\
 
 There is one monitored well in DEPO.
 
-```{r depo_wells}
+```{r}
+#| label: tbl-depo_wells
 #| tbl-cap: "Well sites in DEPO"
-t <- siteInformation(park = "DEPO", type = "Well")
+t <- siteInformation(park = "DEPO", type = "Well") |>
+  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
+  dplyr::relocate(WetlandName, .before = WetlandNumber) |>
+  dplyr::mutate(Type = dplyr::case_when(Type == "WetMeadow" ~ "Wet Meadow",
+                                        TRUE ~ Type))
 
 t |>
   reactable::reactable(
@@ -54,6 +63,10 @@ t |>
       bordered = TRUE,
       highlight = TRUE,
       resizable = TRUE,
+      columns = list(
+        Type = reactable::colDef(width = 120),
+        Longitude = reactable::colDef(width = 120)
+      ),
       defaultColDef = reactable::colDef(
         header = function(value) snakecase::to_title_case(value))
       )
@@ -63,9 +76,29 @@ t |>
 
 SIEN has never deployed any barologgers in DEPO. Atmospheric pressure data come from the weather station at Mammoth Yosemite Airport (available from [MesoWest website](https://mesowest.utah.edu/cgi-bin/droman/download_api2.cgi?stn=KMMH&hour1=17&min1=34&timetype=LOCAL&unit=0&graph=0)). 
 
-```{r depo_baro}
+```{r}
+#| label: tbl-depo_baro
 #| tbl-cap: "Baro sites in DEPO"
-siteInformation(park = "DEPO", type = "Baro")
+t <- siteInformation(park = "DEPO", type = "Baro") |>
+  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
+  dplyr::relocate(SiteName, .before = SiteShort) |>
+  dplyr::rename(SiteCode = SiteShort)
+
+t |>
+  reactable::reactable(
+      sortable = TRUE,
+      filterable = TRUE,
+      compact = TRUE,
+      striped = TRUE,
+      bordered = TRUE,
+      highlight = TRUE,
+      resizable = TRUE,
+      columns = list(
+        Longitude = reactable::colDef(width = 120)
+      ),
+      defaultColDef = reactable::colDef(
+        header = function(value) snakecase::to_title_case(value))
+      )
 ```
 
 ## Atmospheric Pressure Data
@@ -74,7 +107,8 @@ siteInformation(park = "DEPO", type = "Baro")
 
 The weather station record extends from January 2008 to the present with no gaps.
 
-```{r kmmh}
+```{r}
+#| label: fig-kmmh
 #| fig-cap: "Barometric pressure record for KMMH"
 continuousBaroPressure(site = "KMMH")
 ```
@@ -87,19 +121,22 @@ The well levelogger record is continuous from late August 2014 to September 2024
 
 Published data are available [here](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_DEPO_Well-409/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
-```{r 409 plot}
+```{r}
+#| label: fig-409plot
 #| fig-cap: "Water level record for well 409"
 continuousWaterLevel(well = "409")
 ```
 
-```{r 409 visits}
+```{r}
+#| label: tbl-409visits
 #| tbl-cap: "Site visit data for well 409"
-discreteVisitData(well = "409")
+discreteVisitDataReactable(well = "409")
 ```
 
-```{r 409 loggers}
+```{r}
+#| label: tbl-409loggers
 #| tbl-cap: "Logger deployment data for well 409"
-loggerDeployments(well = "409")
+loggerWellDeploymentsReactable(well = "409")
 ```
 
 # Sequoia-Kings Canyon National Park (SEKI)
@@ -110,128 +147,350 @@ loggerDeployments(well = "409")
 
 There are ten monitored wells in the annual panel at SEKI.
 
-```{r seki_wells}
+```{r}
+#| label: tbl-seki_wells
 #| tbl-cap: "Well sites in SEKI"
-# siteInformation(park = "SEKI", type = "well")
+t <- siteInformation(park = "SEKI", type = "Well") |>
+  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
+  dplyr::relocate(WetlandName, .before = WetlandNumber) |>
+  dplyr::mutate(Type = dplyr::case_when(Type == "WetMeadow" ~ "Wet Meadow",
+                                        TRUE ~ Type)) |>
+  dplyr::arrange(WetlandNumber, WellNumber)
+
+t |>
+  reactable::reactable(
+      sortable = TRUE,
+      filterable = TRUE,
+      compact = TRUE,
+      striped = TRUE,
+      bordered = TRUE,
+      highlight = TRUE,
+      resizable = TRUE,
+      columns = list(
+        Type = reactable::colDef(width = 120),
+        Longitude = reactable::colDef(width = 120)
+      ),
+      defaultColDef = reactable::colDef(
+        header = function(value) snakecase::to_title_case(value))
+      )
 ```
 
 ### Baro Stations
 
 SIEN has deployed three barologgers in SEKI. Additional atmospheric pressure data come from the weather station at State Lakes (available from [CDEC website](https://cdec.water.ca.gov/dynamicapp/staMeta?station_id=STL)). 
 
-```{r seki_baro}
+```{r}
+#| label: tbl-seki_baro
 #| tbl-cap: "Baro sites in SEKI"
-# siteInformation(park = "SEKI", type = "baro")
+t <- siteInformation(park = "SEKI", type = "Baro") |>
+  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
+  dplyr::relocate(SiteName, .before = SiteShort) |>
+  dplyr::rename(SiteCode = SiteShort)
+
+t |>
+  reactable::reactable(
+      sortable = TRUE,
+      filterable = TRUE,
+      compact = TRUE,
+      striped = TRUE,
+      bordered = TRUE,
+      highlight = TRUE,
+      resizable = TRUE,
+      columns = list(
+        Longitude = reactable::colDef(width = 120)
+      ),
+      defaultColDef = reactable::colDef(
+        header = function(value) snakecase::to_title_case(value))
+      )
 ```
 
 ## Atmospheric Pressure Data
 
 ### Baro 306 (Shorty's Meadow)
 
-The record begins in XXXX 2014. There is a gap from XXXX 2015 to XXX 2016 due to ________________. A new barologger was deployed in XXXX 2016. The barologger was successfully downloaded in August 2020. The same barologger was recovered during the next site visit in September 2024 but was unable to be downloaded, likely due to a dead battery. The barologger is currently being shipped to the manufacturer for troubleshooting. A replacement barologger was deployed in September 2024 and is currently logging.
+The record begins in July 2014. There is a gap from June 2015 to June 2016 because no barologger was deployed. The same barologger was deployed again in July 2016. The barologger was successfully downloaded in August 2020. The same barologger was recovered during the next site visit in September 2024 but was unable to be downloaded, likely due to a dead battery. The barologger is currently being shipped to the manufacturer for troubleshooting. A replacement barologger was deployed in September 2024 and is currently logging.
 
-```{r 306b}
-#| fig-cap: "Barometric pressure record for 306"
-# continuousBaroPressure(site = "306")
+```{r}
+#| label: fig-306bplot
+#| fig-cap: "Barometric pressure record for baro site 306"
+continuousBaroPressure(site = "306")
+```
+
+```{r}
+#| label: tbl-306bloggers
+#| tbl-cap: "Logger deployment data for baro site 306"
+loggerBaroDeploymentsReactable(site = "306")
 ```
 
 ### Baro 315 (Lake South America)
 
-The record begins in XXXX 2014. A new barologger was deployed in XXXX 2016. The barologger was successfully downloaded in August 2020, which was the last time the site was visited. The barologger is currently logging.
+The record begins in late August 2014 and is continuous through early September 2020, which is the last time the barologger was downloaded. While the two well leveloggers at the site were downloaded in 2021 and 2023, the barologger was not downloaded during these visits. The same barologger is currently deployed at the site. If the logger memory was not cleared during the last visit, then the logger memory is probably full, and the logger may not be recording data. The logger is also reaching end of its battery life.
 
-```{r 315b}
+```{r}
+#| label: fig-315bplot
 #| fig-cap: "Barometric pressure record for 315"
-# continuousBaroPressure(site = "315")
+continuousBaroPressure(site = "315")
+```
+
+```{r}
+#| label: tbl-315bloggers
+#| tbl-cap: "Logger deployment data for baro site 315"
+loggerBaroDeploymentsReactable(site = "315")
 ```
 
 ### Baro 308 (Lower Dusy Basin)
 
-No atmospheric pressure data have been collected yet from this site. A levelogger was deployed as a barologger by mistake in 20__. A barologger was deployed there in ______. The site has not been revisited since then, so the barologger has not yet been downloaded. Presumably, it is currently collecting data.
+No useable atmospheric pressure data have been collected yet from this site. A Gold model barologger was deployed in September 2016. This logger was  programmed to collect baro data in units of water equivalent instead of pressure. This logger exhibited very large and suspect fluctuations for most of the record. Aside from the programming problem, communications with Solinst suggest problems could also have been due to the age of the logger or deployment in direct sunlight. A new barologger was deployed in September 2023. The site has not been revisited since then, so the new barologger has not yet been downloaded.
 
-```{r 308b, eval = FALSE}
+```{r, eval = FALSE}
+#| label: fig-308bplot
 #| fig-cap: "Barometric pressure record for 308"
-# continuousBaroPressure(site = "308")
+continuousBaroPressure(site = "308")
+```
+
+```{r}
+#| label: tbl-308bloggers
+#| tbl-cap: "Logger deployment data for baro site 308"
+loggerBaroDeploymentsReactable(site = "308")
 ```
 
 ### State Lakes (STL CDEQ)
 
 This is a relatively new weather station installed by the Army Corps of Engineers near State Lakes. The record extends from October 2023 to the present with no gaps.
 
-```{r STL}
+```{r}
+#| label: fig-STLplot
 #| fig-cap: "Barometric pressure record for STL"
-# continuousBaroPressure(site = "STL")
+continuousBaroPressure(site = "STL")
 ```
 
 ## Water Level Data
 
+The earliest baro record begins in mid July 2014 at baro site 306 and runs until late July 2020. The baro record from baro site 315 begins in late August 2014 and runs until early September 2020. All sites in SEKI use one of these two records for barometric compensation during this time. Between early September 2020 and early October 2023, there is no baro logger record from within SEKI. The baro record from Bug Camp in YOSE was used for barometric compensation during this time. Use of this record is not ideal due to how far away it is located, but it is the closest and best available record unless other baro records are discovered. Beginning in early October 2023, the weather station at State Lakes came online.
+
 ### Wet Meadow 308 (Lower Dusy Basin)
 
-```{r 308}
+The record begins in July 2015 and is continuous through September 2023. There are periods in late summer and fall of 2016, 2020, and 2021 where the water level in the well dropped below the suspended logger. The logger was left in place during the last visit in September 2023 and is currently collecting data. 
+```{r}
+#| label: fig-308plot
 #| fig-cap: "Water level record for well 308"
-# continuousWaterLevel(well = "308")
+continuousWaterLevel(well = "308")
+```
+
+```{r}
+#| label: tbl-308visits
+#| tbl-cap: "Site visit data for well 308"
+discreteVisitDataReactable(well = "308")
+```
+
+```{r}
+#| label: tbl-308loggers
+#| tbl-cap: "Logger deployment data for well 308"
+loggerWellDeploymentsReactable(well = "308")
 ```
 
 ### Fen 305 (Shorty's Meadow)
 
-```{r 305}
+The record begins in late September 2017 and is continuous through early March 2023, when the logger memory became full. Since the logger was not programmed to overwrite older data, it stopped recording at this time. A new logger was deployed during the last visit in September 2024.
+
+```{r}
+#| label: fig-305plot
 #| fig-cap: "Water level record for well 305"
-# continuousWaterLevel(well = "305")
+continuousWaterLevel(well = "305")
+```
+
+```{r}
+#| label: tbl-305visits
+#| tbl-cap: "Site visit data for well 305"
+discreteVisitDataReactable(well = "305")
+```
+
+```{r}
+#| label: tbl-305loggers
+#| tbl-cap: "Logger deployment data for well 305"
+loggerWellDeploymentsReactable(well = "305")
 ```
 
 ### Wet Meadow 306 (Shorty's Meadow)
 
-```{r 306}
+The record begins in July 2014. There is a gap from June 2015 to June 2016 because no logger was deployed. The same logger was deployed again in late June 2016. The logger was successfully downloaded in late July 2021. The same logger was recovered during the next site visit in September 2024 but was unable to be downloaded, likely due to a dead battery. The logger is currently being shipped to the manufacturer for troubleshooting. A new logger was deployed in September 2024 and is currently logging.
+
+```{r}
+#| label: fig-306plot
 #| fig-cap: "Water level record for well 306"
-# continuousWaterLevel(well = "306")
+continuousWaterLevel(well = "306")
+```
+
+```{r}
+#| label: tbl-306visits
+#| tbl-cap: "Site visit data for well 306"
+discreteVisitDataReactable(well = "306")
+```
+
+```{r}
+#| label: tbl-306loggers
+#| tbl-cap: "Logger deployment data for well 306"
+loggerWellDeploymentsReactable(well = "306")
 ```
 
 ### Fen 319 (Silliman)
 
-```{r 319}
+The record begins in June 2014 and is continuous through the end of December 2022. There are some periods in late summer and fall of 2021 and 2022 where the water level in the well dropped below the suspended logger. In January 2023, the well logger began exhibiting large drops and jumps, and the data became suspect. The same logger is currently deployed and is likely nearing a full memory and the end of its battery life. The logger should be replaced during the next visit.
+
+```{r}
+#| label: fig-319plot
 #| fig-cap: "Water level record for well 319"
-# continuousWaterLevel(well = "319")
+continuousWaterLevel(well = "319")
+```
+
+```{r}
+#| label: tbl-319visits
+#| tbl-cap: "Site visit data for well 319"
+discreteVisitDataReactable(well = "319")
+```
+
+```{r}
+#| label: tbl-319loggers
+#| tbl-cap: "Logger deployment data for well 319"
+loggerWellDeploymentsReactable(well = "319")
 ```
 
 ### Wet Meadow 320 (Silliman)
 
-```{r 320}
+The record begins in June 2016 and is continuous through mid January 2023. There are some periods in late summer and fall of 2021 and 2022 where the water level in the well dropped below the suspended logger. In January 2023, the memory became full and the logger stopped recording data, since it was not set to overwrite data. The logger was left in place during the last visit in August 2023. If the logger memory was not cleared, then the logger is  not collecting data right now due to a full memory and is also likely reaching end of its battery life.
+
+```{r}
+#| label: fig-320plot
 #| fig-cap: "Water level record for well 320"
-# continuousWaterLevel(well = "320")
+continuousWaterLevel(well = "320")
+```
+
+```{r}
+#| label: tbl-320visits
+#| tbl-cap: "Site visit data for well 320"
+discreteVisitDataReactable(well = "320")
+```
+
+```{r}
+#| label: tbl-320loggers
+#| tbl-cap: "Logger deployment data for well 320"
+loggerWellDeploymentsReactable(well = "320")
 ```
 
 ### Wet Meadow 310 (Windy Gap)
 
-```{r 310}
+The record begins in August 2014. There was a short period in late summer 2015 where the water level in the well dropped below the suspended logger. The logger was removed from the well in June 2016 because it could not be downloaded in the field. However, the logger was successfully downloaded in the office. A new logger was not deployed in the well until July 2017. This logger was last downloaded during the last visit in August 2021. There are some periods in summer 2021 where the water level in the well dropped below the suspended logger. The same logger is currently deployed and is likely nearing a full memory and the end of its battery life. The logger should be replaced during the next visit.
+
+```{r}
+#| label: fig-310plot
 #| fig-cap: "Water level record for well 310"
-# continuousWaterLevel(well = "310")
+continuousWaterLevel(well = "310")
+```
+
+```{r}
+#| label: tbl-310visits
+#| tbl-cap: "Site visit data for well 310"
+discreteVisitDataReactable(well = "310")
+```
+
+```{r}
+#| label: tbl-310loggers
+#| tbl-cap: "Logger deployment data for well 310"
+loggerWellDeploymentsReactable(well = "310")
 ```
 
 ### Fen 345 (Hay Meadow)
 
-```{r 345}
+The record begins in July 2014. The logger was removed from the well in May 2015 because it could not be downloaded in the field. A new logger was deployed during the next visit in July 2016. The water level was close to the ground surface for most of the record until summer 2021, when the water level dropped from July to September. Beginning in December 2021, the logger readings became erratic. Except for June and July 2022, there were large fluctuations in the record, and the fluctuations appeared inconsistent with the diurnal and longer-term signals in the barometric record. The logger was removed during the last visit in July 2023 because it could not be downloaded in the field. However, the logger was successfully downloaded in the office. A new logger was deployed during that visit and is currently logging.
+
+```{r}
+#| label: fig-345plot
 #| fig-cap: "Water level record for well 345"
-# continuousWaterLevel(well = "345")
+continuousWaterLevel(well = "345")
+```
+
+```{r}
+#| label: tbl-345visits
+#| tbl-cap: "Site visit data for well 345"
+discreteVisitDataReactable(well = "345")
+```
+
+```{r}
+#| label: tbl-345loggers
+#| tbl-cap: "Logger deployment data for well 345"
+loggerWellDeploymentsReactable(well = "345")
 ```
 
 ### Wet Meadow 348 (Hay Meadow)
 
-```{r 348}
+The record begins in July 2016 and is continuous through July 2023. There is a period in September 2021 where the water level in the well likely dropped below the suspended logger. Beginning in fall 2022, the record began to exhibit large fluctuations and drift upward above the level of the top of the well casing. These data are suspect and may not be usable. The logger was removed during the last visit in July 2023 because it could not be downloaded in the field. However, the logger was successfully downloaded in the office. A new logger was deployed during that visit and is currently logging.
+
+```{r}
+#| label: fig-348plot
 #| fig-cap: "Water level record for well 348"
-# continuousWaterLevel(well = "348")
+continuousWaterLevel(well = "348")
+```
+
+```{r}
+#| label: tbl-348visits
+#| tbl-cap: "Site visit data for well 348"
+discreteVisitDataReactable(well = "348")
+```
+
+```{r}
+#| label: tbl-348loggers
+#| tbl-cap: "Logger deployment data for well 348"
+loggerWellDeploymentsReactable(well = "348")
 ```
 
 ### Wet Meadow 314 (Lake South America)
 
-```{r 314}
+The record begins in August 2015. The logger deployed in August 2015 was set to record in units of pressure (psi) instead of water column equivalent (cm) during its entire deployment. This logger could not be downloaded in August 2020. The record for this logger ends in April 2019. It is unclear if some data were later successfully downloaded in the office, or if there was an undocumented visit to the site in April 2019. A new logger was deployed in September 2020, but there is no information on this deployment. A new logger was again deployed in September 2023 and is currently logging.
+
+There are a couple of concerns with this record. From November 2020 to May 2021, the record drifted nearly half a meter above the ground surface, well above the level of the top of the well casing. These data are suspect and may not be usable. Additionally, throughout the record, the logger exhibited large diurnal fluctuations during the summer, starting around the onset of snowmelt and tapering off in the fall. It is unclear what is causing these fluctuations or if they reflect actual conditions in the well.
+
+Lake South America is the highest elevation annual site monitored for this protocol. Factors in the local environment, such as prolonged cold, ice, or snow, may be affecting the deployed loggers and the quality of the record.
+
+```{r}
+#| label: fig-314plot
 #| fig-cap: "Water level record for well 314"
-# continuousWaterLevel(well = "314")
+continuousWaterLevel(well = "314")
+```
+
+```{r}
+#| label: tbl-314visits
+#| tbl-cap: "Site visit data for well 314"
+discreteVisitDataReactable(well = "314")
+```
+
+```{r}
+#| label: tbl-314loggers
+#| tbl-cap: "Logger deployment data for well 314"
+loggerWellDeploymentsReactable(well = "314")
 ```
 
 ### Fen 315 (Lake South America)
 
-```{r 315}
+The record begins in August 2015.
+
+Throughout the record, the logger exhibited 
+
+```{r}
+#| label: fig-315plot
 #| fig-cap: "Water level record for well 315"
-# continuousWaterLevel(well = "315")
+continuousWaterLevel(well = "315")
+```
+
+```{r}
+#| label: tbl-315visits
+#| tbl-cap: "Site visit data for well 315"
+discreteVisitDataReactable(well = "315")
+```
+
+```{r}
+#| label: tbl-315loggers
+#| tbl-cap: "Logger deployment data for well 315"
+loggerWellDeploymentsReactable(well = "315")
 ```
 
 # Yosemite National Park (YOSE)
@@ -242,41 +501,87 @@ This is a relatively new weather station installed by the Army Corps of Engineer
 
 There are eight monitored wells in the annual panel at YOSE.
 
-```{r yose_wells}
+```{r}
+#| label: tbl-yose_wells
 #| tbl-cap: "Well sites in YOSE"
-# siteInformation(park = "YOSE", type = "well")
+t <- siteInformation(park = "YOSE", type = "Well") |>
+  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
+  dplyr::relocate(WetlandName, .before = WetlandNumber) |>
+  dplyr::mutate(Type = dplyr::case_when(Type == "WetMeadow" ~ "Wet Meadow",
+                                        TRUE ~ Type)) |>
+  dplyr::arrange(WetlandNumber, WellNumber)
+
+t |>
+  reactable::reactable(
+      sortable = TRUE,
+      filterable = TRUE,
+      compact = TRUE,
+      striped = TRUE,
+      bordered = TRUE,
+      highlight = TRUE,
+      resizable = TRUE,
+      columns = list(
+        Type = reactable::colDef(width = 120),
+        Longitude = reactable::colDef(width = 120)
+      ),
+      defaultColDef = reactable::colDef(
+        header = function(value) snakecase::to_title_case(value))
+      )
 ```
 
 ### Baro Stations
 
 There are three primary barologgers operated and maintained by park staff at YOSE. There is also one barologger operated and maintained by network staff at SIEN. 
 
-```{r yose_baro}
+```{r}
+#| label: tbl-yose_baro
 #| tbl-cap: "Baro sites in YOSE"
-# siteInformation(park = "YOSE", type = "baro")
+t <- siteInformation(park = "YOSE", type = "Baro") |>
+  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
+  dplyr::relocate(SiteName, .before = SiteShort) |>
+  dplyr::rename(SiteCode = SiteShort)
+
+t |>
+  reactable::reactable(
+      sortable = TRUE,
+      filterable = TRUE,
+      compact = TRUE,
+      striped = TRUE,
+      bordered = TRUE,
+      highlight = TRUE,
+      resizable = TRUE,
+      columns = list(
+        Longitude = reactable::colDef(width = 120)
+      ),
+      defaultColDef = reactable::colDef(
+        header = function(value) snakecase::to_title_case(value))
+      )
 ```
 
 ## Atmospheric Pressure Data
 
 ### Bug Camp (BUGL)
 
-```{r bugl}
-#| fig-cap: "Barometric pressure record for BUGL"
-# continuousBaroPressure(site = "BUGL")
+```{r}
+#| label: fig-BUGLplot
+#| fig-cap: "Barometric pressure record for Bug Camp"
+continuousBaroPressure(site = "BUGL")
 ```
 
 ### Illilouette Creek (ILLI)
 
-```{r illi}
-#| fig-cap: "Barometric pressure record for ILLI"
-# continuousBaroPressure(site = "ILLI")
+```{r}
+#| label: fig-ILLIplot
+#| fig-cap: "Barometric pressure record for Illilouette Creek"
+continuousBaroPressure(site = "ILLI")
 ```
 
 ### Above High Sierra Camp (AHSC)
 
-```{r ahsc}
-#| fig-cap: "Barometric pressure record for AHSC"
-# continuousBaroPressure(site = "AHSC")
+```{r}
+#| label: fig-AHSCplot
+#| fig-cap: "Barometric pressure record for Above High Sierra Camp"
+continuousBaroPressure(site = "AHSC")
 ```
 
 ### Baro 214 (Kendrick Creek)
@@ -285,9 +590,16 @@ No atmospheric pressure data have been collected yet from this site. A levelogge
 
 Unfortunately, the logger deployed from X to Y was a levelogger and not a barologger. The logger exhibited wild fluctuations during the summer months that may have been due to the logger sensitivity being designed for underwater deployment or to the logger being deployed in direct sunlight, which can overheat the logger and introduce error.
 
-```{r 214b, eval = FALSE}
+```{r}
+#| label: fig-214bplot
 #| fig-cap: "Barometric pressure record for 214"
-# continuousBaroPressure(site = "214")
+continuousBaroPressure(site = "BUGL")
+```
+
+```{r}
+#| label: tbl-214bloggers
+#| tbl-cap: "Logger deployment data for baro site 214"
+loggerBaroDeploymentsReactable(site = "214")
 ```
 
 ## Water Level Data

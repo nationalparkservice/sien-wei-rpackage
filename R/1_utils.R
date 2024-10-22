@@ -50,7 +50,7 @@ readAquarius <- function() {
 
   baro <- c("SIEN_WEI_DEPO_MesoWest-KMMH",
             "SIEN_WEI_SEKI-02_Well-306",
-#           "SIEN_WEI_SEKI-01_Well-308", # add back in once data have been appended in Aquarius
+            "SIEN_WEI_SEKI-01_Well-308",
             "SIEN_WEI_SEKI-06_Well-315",
             "SIEN_WEI_SEKI_CDEC-STL",
             "SIEN_WEI_YOSE-01_Well-214",
@@ -174,7 +174,8 @@ readAccess <- function() {
   data <-fetchaccess::fetchFromAccess(db)$data
 
   data$Site <- data$Site |>
-    dplyr::mutate(SiteShort = dplyr::case_when(!is.na(WellNumber) ~ as.character(WellNumber),
+    dplyr::mutate(SiteShort = dplyr::case_when(!is.na(WellNumber) & Type != "Barometric" ~ as.character(WellNumber),
+                                               !is.na(WellNumber) & Type == "Barometric" ~ as.character(paste0(WellNumber, "b")),
                                                grepl("CDEC", Identifier) ~ stringr::str_sub(Identifier, start = -3),
                                                grepl("MesoWest", Identifier) ~ stringr::str_sub(Identifier, start = -4),
                                                TRUE ~ stringr::str_sub(Identifier, start = -4))) |>

@@ -79,47 +79,51 @@ readAquarius <- function() {
   well_data <- list(well_data)
   names(well_data) <- "TimeseriesWaterLevel"
 
-  for (location in well) {
-    import <- timeseries$getTimeSeriesData(paste0("DepthFromWaterPressure.Raw Levelogger@", location))
-    location_data <- import$Points |>
-      dplyr::select(Timestamp,
-                    NumericValue1,
-                    GradeName1,
-                    ApprovalName1) |>
-      dplyr::rename(RawLevel_cm = NumericValue1, Grade = GradeName1, Approval = ApprovalName1, DateTime = Timestamp) |>
-      dplyr::mutate(SiteCode = location) |>
-      dplyr::mutate(Park = dplyr::case_when(grepl("DEPO", SiteCode) ~ "DEPO",
-                                            grepl("SEKI", SiteCode) ~ "SEKI",
-                                            grepl("YOSE", SiteCode) ~ "YOSE",
-                                            TRUE ~ NA_character_)) |>
-      dplyr::mutate(Well = as.integer(stringr::str_sub(SiteCode, start = -3)))
+  # Raw water level and groundwater temperature continuous datasets
+  # have been commented out to save time during loading of data.
+  # They can be un-commented out as needed.
 
-    raw_data <- rbind(raw_data, location_data)
-  }
+  # for (location in well) {
+  #   import <- timeseries$getTimeSeriesData(paste0("DepthFromWaterPressure.Raw Levelogger@", location))
+  #   location_data <- import$Points |>
+  #     dplyr::select(Timestamp,
+  #                   NumericValue1,
+  #                   GradeName1,
+  #                   ApprovalName1) |>
+  #     dplyr::rename(RawLevel_cm = NumericValue1, Grade = GradeName1, Approval = ApprovalName1, DateTime = Timestamp) |>
+  #     dplyr::mutate(SiteCode = location) |>
+  #     dplyr::mutate(Park = dplyr::case_when(grepl("DEPO", SiteCode) ~ "DEPO",
+  #                                           grepl("SEKI", SiteCode) ~ "SEKI",
+  #                                           grepl("YOSE", SiteCode) ~ "YOSE",
+  #                                           TRUE ~ NA_character_)) |>
+  #     dplyr::mutate(Well = as.integer(stringr::str_sub(SiteCode, start = -3)))
+  #
+  #   raw_data <- rbind(raw_data, location_data)
+  # }
+  #
+  # raw_data <- list(raw_data)
+  # names(raw_data) <- "TimeseriesRawLevel"
 
-  raw_data <- list(raw_data)
-  names(raw_data) <- "TimeseriesRawLevel"
-
-  for (location in well) {
-    import <- timeseries$getTimeSeriesData(paste0("Groundwater Temp at Depth.Water Temp@", location))
-    location_data <- import$Points |>
-      dplyr::select(Timestamp,
-                    NumericValue1,
-                    GradeName1,
-                    ApprovalName1) |>
-      dplyr::rename(WaterTemp_C = NumericValue1, Grade = GradeName1, Approval = ApprovalName1, DateTime = Timestamp) |>
-      dplyr::mutate(SiteCode = location) |>
-      dplyr::mutate(Park = dplyr::case_when(grepl("DEPO", SiteCode) ~ "DEPO",
-                                            grepl("SEKI", SiteCode) ~ "SEKI",
-                                            grepl("YOSE", SiteCode) ~ "YOSE",
-                                            TRUE ~ NA_character_)) |>
-      dplyr::mutate(Well = as.integer(stringr::str_sub(SiteCode, start = -3)))
-
-    watertemp_data <- rbind(watertemp_data, location_data)
-  }
-
-  watertemp_data <- list(watertemp_data)
-  names(watertemp_data) <- "TimeseriesWaterTemperature"
+  # for (location in well) {
+  #   import <- timeseries$getTimeSeriesData(paste0("Groundwater Temp at Depth.Water Temp@", location))
+  #   location_data <- import$Points |>
+  #     dplyr::select(Timestamp,
+  #                   NumericValue1,
+  #                   GradeName1,
+  #                   ApprovalName1) |>
+  #     dplyr::rename(WaterTemp_C = NumericValue1, Grade = GradeName1, Approval = ApprovalName1, DateTime = Timestamp) |>
+  #     dplyr::mutate(SiteCode = location) |>
+  #     dplyr::mutate(Park = dplyr::case_when(grepl("DEPO", SiteCode) ~ "DEPO",
+  #                                           grepl("SEKI", SiteCode) ~ "SEKI",
+  #                                           grepl("YOSE", SiteCode) ~ "YOSE",
+  #                                           TRUE ~ NA_character_)) |>
+  #     dplyr::mutate(Well = as.integer(stringr::str_sub(SiteCode, start = -3)))
+  #
+  #   watertemp_data <- rbind(watertemp_data, location_data)
+  # }
+  #
+  # watertemp_data <- list(watertemp_data)
+  # names(watertemp_data) <- "TimeseriesWaterTemperature"
 
   for (location in baro) {
 
@@ -151,7 +155,10 @@ readAquarius <- function() {
   baro_data <- list(baro_data)
   names(baro_data) <- "TimeseriesBaroPressure"
 
-  data <- c(well_data, raw_data, watertemp_data, baro_data)
+  data <- c(well_data,
+            # raw_data, # add back in if needed
+            # watertemp_data, # add back in if needed
+            baro_data)
 
   data <- lapply(data, function(df) {
     df |>

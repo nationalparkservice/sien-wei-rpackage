@@ -35,7 +35,13 @@ Barometric pressure data may come from dedicated barologgers or from published w
 
 Manual barometric compensation follows a simple calculation provided by Solinst (available on the [Solinst website](https://www.solinst.com/products/dataloggers-and-telemetry/3001-levelogger-series/technical-bulletins/barometric-compensation.pdf)).
 
-$Barometric compensated water level (cm) = Raw water column equivalent (cm) + (\frac{Elevation of levelogger (ft) - Elevation of weather station (ft)}{826} \times 30.48(\frac{cm}{ft})) - (Barometric pressure (kPa) \times 10.1972 (\frac{cm}{kPa}))$
+| $Barometric compensated water level (cm) =$
+|
+|       $Raw water column equivalent (cm) +$
+|
+|       $(\frac{Elevation of levelogger (ft) - Elevation of weather station (ft)}{826} \times 30.48(\frac{cm}{ft})) -$
+|
+|       $(Barometric pressure (kPa) \times 10.1972 (\frac{cm}{kPa}))$
 
 # Devils Postpile National Monument(DEPO)
 
@@ -117,9 +123,11 @@ continuousBaroPressure(site = "KMMH")
 
 ### Wet Meadow 409 (Soda Springs)
 
+*Note: This well was originally numbered 409. It was renumbered to 337 in CHECK YEAR. However, it is still usually referred to as 409.*
+
 The well levelogger record is continuous from late August 2014 to September 2024. There are no obvious problems with the record, although the logger was set to collect data once per day instead of once per hour from August 2023 to September 2024. The interval was reset to once per hour during the most recent visit in September 2024. All atmospheric pressure compensation data come from KMMH.
 
-Published data are available [here](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_DEPO_Well-409/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
+Water level data are also available to view [here](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_DEPO_Well-409/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
 ```{r}
 #| label: fig-409plot
@@ -228,7 +236,7 @@ The record begins in late August 2014 and is continuous through early September 
 
 ```{r}
 #| label: fig-315bplot
-#| fig-cap: "Barometric pressure record for 315"
+#| fig-cap: "Barometric pressure record for baro site 315"
 continuousBaroPressure(site = "315")
 ```
 
@@ -244,7 +252,7 @@ No useable atmospheric pressure data have been collected yet from this site. A G
 
 ```{r, eval = FALSE}
 #| label: fig-308bplot
-#| fig-cap: "Barometric pressure record for 308"
+#| fig-cap: "Barometric pressure record for baro site 308"
 continuousBaroPressure(site = "308")
 ```
 
@@ -266,11 +274,14 @@ continuousBaroPressure(site = "STL")
 
 ## Water Level Data
 
-The earliest baro record begins in mid July 2014 at baro site 306 and runs until late July 2020. The baro record from baro site 315 begins in late August 2014 and runs until early September 2020. All sites in SEKI use one of these two records for barometric compensation during this time. Between early September 2020 and early October 2023, there is no baro logger record from within SEKI. The baro record from Bug Camp in YOSE was used for barometric compensation during this time. Use of this record is not ideal due to how far away it is located, but it is the closest and best available record unless other baro records are discovered. Beginning in early October 2023, the weather station at State Lakes came online.
+The earliest baro record begins in mid July 2014 at baro site 306 and runs until late July 2020. The baro record from baro site 315 begins in late August 2014 and runs until early September 2020. All sites in SEKI use one of these two records for barometric compensation during this time.
+
+Between early September 2020 and early October 2023, there is no baro logger record from within SEKI. The baro record from Bug Camp in YOSE was used for barometric compensation during this time. Use of this record is not ideal due to how far away it is located, but it is the closest and best available record unless other baro records are discovered. Beginning in early October 2023, the weather station at State Lakes came online.
 
 ### Wet Meadow 308 (Lower Dusy Basin)
 
-The record begins in July 2015 and is continuous through September 2023. There are periods in late summer and fall of 2016, 2020, and 2021 where the water level in the well dropped below the suspended logger. The logger was left in place during the last visit in September 2023 and is currently collecting data. 
+The record begins in July 2015 and is continuous through September 2023. There are periods in late summer and fall of 2016, 2020, and 2021 when the water level in the well dropped below the suspended logger. The logger was left in place during the last visit in September 2023 and is currently collecting data.
+
 ```{r}
 #| label: fig-308plot
 #| fig-cap: "Water level record for well 308"
@@ -335,7 +346,7 @@ loggerWellDeploymentsReactable(well = "306")
 
 ### Fen 319 (Silliman)
 
-The record begins in June 2014 and is continuous through the end of December 2022. There are some periods in late summer and fall of 2021 and 2022 where the water level in the well dropped below the suspended logger. In January 2023, the well logger began exhibiting large drops and jumps, and the data became suspect. The same logger is currently deployed and is likely nearing a full memory and the end of its battery life. The logger should be replaced during the next visit.
+The record begins in June 2014 and is continuous through the end of December 2022. There are some periods in late summer and fall of 2021 and 2022 when the water level in the well dropped below the suspended logger. In January 2023, the well logger began exhibiting large drops and jumps, and the data became suspect. The same logger is currently deployed and is likely nearing a full memory and the end of its battery life. The logger should be replaced during the next visit.
 
 ```{r}
 #| label: fig-319plot
@@ -357,7 +368,7 @@ loggerWellDeploymentsReactable(well = "319")
 
 ### Wet Meadow 320 (Silliman)
 
-The record begins in June 2016 and is continuous through mid January 2023. There are some periods in late summer and fall of 2021 and 2022 where the water level in the well dropped below the suspended logger. In January 2023, the memory became full and the logger stopped recording data, since it was not set to overwrite data. The logger was left in place during the last visit in August 2023. If the logger memory was not cleared, then the logger is  not collecting data right now due to a full memory and is also likely reaching end of its battery life.
+The record begins in June 2016 and is continuous through mid January 2023. There are some periods in late summer and fall of 2021 and 2022 when the water level in the well dropped below the suspended logger. In January 2023, the memory became full and the logger stopped recording data, since it was not set to overwrite data. The logger was left in place during the last visit in August 2023. If the logger memory was not cleared, then the logger is  not collecting data right now due to a full memory and is also likely reaching end of its battery life.
 
 ```{r}
 #| label: fig-320plot
@@ -379,7 +390,7 @@ loggerWellDeploymentsReactable(well = "320")
 
 ### Wet Meadow 310 (Windy Gap)
 
-The record begins in August 2014. There was a short period in late summer 2015 where the water level in the well dropped below the suspended logger. The logger was removed from the well in June 2016 because it could not be downloaded in the field. However, the logger was successfully downloaded in the office. A new logger was not deployed in the well until July 2017. This logger was last downloaded during the last visit in August 2021. There are some periods in summer 2021 where the water level in the well dropped below the suspended logger. The same logger is currently deployed and is likely nearing a full memory and the end of its battery life. The logger should be replaced during the next visit.
+The record begins in August 2014. There was a short period in late summer 2015 when the water level in the well dropped below the suspended logger. The logger was removed from the well in June 2016 because it could not be downloaded in the field. However, the logger was successfully downloaded in the office. A new logger was not deployed in the well until July 2017. This logger was last downloaded during the last visit in August 2021. There are some periods in summer 2021 when the water level in the well dropped below the suspended logger. The same logger is currently deployed and is likely nearing a full memory and the end of its battery life. The logger should be replaced during the next visit.
 
 ```{r}
 #| label: fig-310plot
@@ -423,11 +434,11 @@ loggerWellDeploymentsReactable(well = "345")
 
 ### Wet Meadow 348 (Hay Meadow)
 
-The record begins in July 2016 and is continuous through July 2023. There is a period in September 2021 where the water level in the well likely dropped below the suspended logger. Beginning in fall 2022, the record began to exhibit large fluctuations and drift upward above the level of the top of the well casing. These data are suspect and may not be usable. The logger was removed during the last visit in July 2023 because it could not be downloaded in the field. However, the logger was successfully downloaded in the office. A new logger was deployed during that visit and is currently logging.
+The record begins in July 2016 and is continuous through July 2023. There is a period in September 2021 when the water level in the well likely dropped below the suspended logger. Beginning in fall 2022, the record began to exhibit large fluctuations and drift upward above the level of the top of the well casing. These data are suspect and may not be usable. The logger was removed during the last visit in July 2023 because it could not be downloaded in the field. However, the logger was successfully downloaded in the office. A new logger was deployed during that visit and is currently logging.
 
 ```{r}
 #| label: fig-348plot
-#| fig-cap: "Water level record for well 348"
+#| fig-cap: "Water level record for well 348. Lines in gray indicate periods when the water level in the well dropped below the suspended logger. Lines in pink indicate periods where the data are suspect and may not reflect accurate water level."
 continuousWaterLevel(well = "348")
 ```
 
@@ -449,7 +460,7 @@ The record begins in August 2015. The logger deployed in August 2015 was set to 
 
 There are a couple of concerns with this record. From November 2020 to May 2021, the record drifted nearly half a meter above the ground surface, well above the level of the top of the well casing. These data are suspect and may not be usable. Additionally, throughout the record, the logger exhibited large diurnal fluctuations during the summer, starting around the onset of snowmelt and tapering off in the fall. It is unclear what is causing these fluctuations or if they reflect actual conditions in the well.
 
-Lake South America is the highest elevation annual site monitored for this protocol. Factors in the local environment, such as prolonged cold, ice, or snow, may be affecting the deployed loggers and the quality of the record.
+Lake South America is the highest elevation annual panel site monitored for this protocol. Factors in the local environment, such as prolonged cold, ice, or snow, may be affecting the deployed loggers and the quality of the record.
 
 ```{r}
 #| label: fig-314plot
@@ -471,9 +482,9 @@ loggerWellDeploymentsReactable(well = "314")
 
 ### Fen 315 (Lake South America)
 
-The record begins in August 2015.
+The record begins in September 2016 and is continuous through early September 2023. The same logger has been deployed for the entire period and is currently logging since the last visit in September 2023. This logger may be nearing the end of its battery life and should be replaced during the next visit.
 
-Throughout the record, the logger exhibited 
+There were two periods where the record spiked far higher than the level of the top of the well casing. The first occurred in May and June 2017, and the second occurred in May and June 2023. These data may be due to effects on the logger from snowmelt during high snowpack years.
 
 ```{r}
 #| label: fig-315plot
@@ -562,6 +573,16 @@ t |>
 
 ### Bug Camp (BUGL)
 
+The record begins in August 2012. There is a gap from early August 2013 to June 2014. There is another gap from late August 2019 to late August 2020. The barologger was most recently downloaded during the last visit in August 2024.
+
+The record appeared to be slightly vertically offset during the first deployment from August 2012 to August 2013, higher than all the other years. A correction (-0.70 kPa) was applied to the data during this period to be consistent with the other years.
+
+The record also appeared to be slightly horizontally offset between early September 2018 and late August 2019, by about 7 hours compared to weather station data from KMMH. The file for this deployment year may have accidentally been flagged as UTC during upload. A correction was applied to shift the record to the correct time zone.
+
+From late November 2018 to late August 2019, the record exhibited numerous large offsets, during some periods on a daily basis. It is unclear what may have been causing the barologger to malfunction. Alternative records from other sites were used for barometric compensation during this time.
+
+Because this barologger is maintained by YOSE, there is no logger deployment information.
+
 ```{r}
 #| label: fig-BUGLplot
 #| fig-cap: "Barometric pressure record for Bug Camp"
@@ -570,13 +591,29 @@ continuousBaroPressure(site = "BUGL")
 
 ### Illilouette Creek (ILLI)
 
+The record begins in October 2015 and is continuous through September 2023.
+
+The record appeared to be slightly vertically offset between September 2016 and October 2017, lower than all the other years. A correction (0.65 kPa) was applied to the data during this period to be consistent with the other years. Additionally, there were unusually large diurnal fluctuations during this same period. It is unclear what may have been causing the barologger to malfunction. Alternative records from other sites were used for barometric compensation during this time.
+
+Because this barologger is maintained by YOSE, there is no logger deployment information.
+
 ```{r}
 #| label: fig-ILLIplot
 #| fig-cap: "Barometric pressure record for Illilouette Creek"
 continuousBaroPressure(site = "ILLI")
 ```
 
-### Above High Sierra Camp (AHSC)
+### Merced River Above High Sierra Camp (AHSC)
+
+The record begins in September 2017. There is a gap from October 2020 to August 2022. The barologger was most recently downloaded during the last visit in August 2024.
+
+The record appeared to be slightly horizontally offset between early September 2018 and late August 2019, by about 7 hours compared to the weather station at KMMH. The file for this deployment year may have accidentally been flagged as UTC during upload. A correction was applied to shift the record to the correct time zone.
+
+The record also appears to be slightly horizontally offset between early October 2023 and early August 2024, by about 7 hours compared to the weather station at KMMH. This was also probably due to incorrect time zone flagging during upload. A correction was applied to shift the record to a consistent time zone.
+
+During February 2019, the record exhibited noticeably larger than normal diurnal fluctuations, and possibly at other periods during the deployment from September 2018 to August 2019. Alternative records from other sites were used for barometric compensation during this time.
+
+Because this barologger is maintained by YOSE, there is no logger deployment information.
 
 ```{r}
 #| label: fig-AHSCplot
@@ -586,14 +623,16 @@ continuousBaroPressure(site = "AHSC")
 
 ### Baro 214 (Kendrick Creek)
 
-No atmospheric pressure data have been collected yet from this site. A levelogger was deployed as a barologger by mistake in 20__. A barologger was deployed there in ______. The site has not been revisited since then, so the barologger has not yet been downloaded. Presumably, it is currently collecting data.
+The record begins in June 2015. However, since the file exports contain units of water column equivalent (m) instead of pressure (psi or kPa), it appears that a levelogger was deployed instead of a barologger by mistake. Additionally, Gold model leveloggers applied a sea level normalization to the data. Consequently, a correction (-29.1 kPa) was applied to the data collected by this logger to approximate the actual atmospheric pressure at the elevation of the site.
 
-Unfortunately, the logger deployed from X to Y was a levelogger and not a barologger. The logger exhibited wild fluctuations during the summer months that may have been due to the logger sensitivity being designed for underwater deployment or to the logger being deployed in direct sunlight, which can overheat the logger and introduce error.
+From September 2018 to early September 2023, the record exhibited wild fluctuations during the summer months that may have been due to the logger sensitivity being designed for underwater deployment or to the logger being deployed in direct sunlight, which can overheat the logger and introduce error.
+
+A replacement barologger was deployed in early September 2023 and is currently logging. The site has not been visited again since then, so this new logger has not yet been downloaded.
 
 ```{r}
 #| label: fig-214bplot
-#| fig-cap: "Barometric pressure record for 214"
-continuousBaroPressure(site = "BUGL")
+#| fig-cap: "Barometric pressure record for baro site 214"
+continuousBaroPressure(site = "214")
 ```
 
 ```{r}
@@ -604,58 +643,192 @@ loggerBaroDeploymentsReactable(site = "214")
 
 ## Water Level Data
 
+The earliest baro record begins in late July 2012 at BUGL and runs until late August 2024, with gaps or unusable data from August 2013 to June 2014 and from December 2018 to late August 2020. This second period can be filled with data from AHSC.
+
+The baro record at AHSC begins in September 2017 and runs until early August 2024, with a some questional data around February 2019 and a gap from October 2020 to late August 2022. The first period can be filled with data from ILLI and the second with data from BUGL.
+
+The baro record at ILLI begins in October 2015 and runs until late September 2023, with a unusable data from early September 2016 to October 2017. This period can be filled with data from BUGL.
+
+The baro record at 214 begins in late June 2015 and runs until late September 2018. This record has had some problems (described previously), so it is not being used for barometric compensation at this time. Once the new logger is downloaded, this site may provide usable data. 
+
+Most sites in YOSE primarily use the record from BUGL for barometric compensation, with some sites prioritizing AHSC or ILLI depending on proximity.
+
 ### Wet Meadow 214 (Kendrick Creek)
 
-```{r 214}
+The record begins in July 2015 and is continuous through early September 2023. The current logger has been deployed since July 2015 (originally at well 308 in SEKI) and has been logging since the last visit in September 2023. This logger may be nearing the end of its battery life and should be replaced during the next visit.
+
+```{r}
+#| label: fig-214plot
 #| fig-cap: "Water level record for well 214"
-# continuousWaterLevel(well = "214")
+continuousWaterLevel(well = "214")
+```
+
+```{r}
+#| label: tbl-214visits
+#| tbl-cap: "Site visit data for well 214"
+discreteVisitDataReactable(well = "214")
+```
+
+```{r}
+#| label: tbl-214loggers
+#| tbl-cap: "Logger deployment data for well 214"
+loggerWellDeploymentsReactable(well = "214")
 ```
 
 ### Wet Meadow 224 (Bridalveil)
 
-```{r 224}
+The record begins in late August 2015 and is continuous through October 2022. The well was dry when it was first installed, and there is a period in late summer and early fall 2015 when the water level in the well was below the suspended logger. A new logger was deployed during the last visit in October 2022 and is currently logging.
+
+** Was this the well that was not found in 2023? Double-check.
+
+```{r}
+#| label: fig-224plot
 #| fig-cap: "Water level record for well 224"
-# continuousWaterLevel(well = "224")
+continuousWaterLevel(well = "224")
+```
+
+```{r}
+#| label: tbl-224visits
+#| tbl-cap: "Site visit data for well 224"
+discreteVisitDataReactable(well = "224")
+```
+
+```{r}
+#| label: tbl-224loggers
+#| tbl-cap: "Logger deployment data for well 224"
+loggerWellDeploymentsReactable(well = "224")
 ```
 
 ### Wet Meadow 301 (Echo Creek)
 
-```{r 301}
+The record begins in July 2016 and is continuous through early November 2020. At this time, the logger began to malfunction and then stopped recording entirely. The logger was replaced in September 2023. The current logger has been deployed since August 2015 (originally at well 224 in YOSE) and has been logging since the last visit in September 2023. This logger may be nearing the end of its battery life and should be replaced during the next visit.
+
+```{r}
+#| label: fig-301plot
 #| fig-cap: "Water level record for well 301"
-# continuousWaterLevel(well = "301")
+continuousWaterLevel(well = "301")
+```
+
+```{r}
+#| label: tbl-301visits
+#| tbl-cap: "Site visit data for well 301"
+discreteVisitDataReactable(well = "301")
+```
+
+```{r}
+#| label: tbl-301loggers
+#| tbl-cap: "Logger deployment data for well 301"
+loggerWellDeploymentsReactable(well = "301")
 ```
 
 ### Fen 327 (Echo Creek)
 
-```{r 327}
+*Note: This well was originally numbered 225. It was renumbered to 327 in 2016.*
+
+The record begins in late July 2016 and runs through August 2022. A logger had been deployed during the first visit in July 2015; however, it had not been set to start recording data. The logger was launched during the next visit in July 2016. The logger could not be downloaded during the last visit in August 2023. However, the crew did not have a spare logger, so the same logger was left in place. The logger probably has a dead battery and is not collecting data. It should be replaced during the next visit.
+
+```{r}
+#| label: fig-327plot
 #| fig-cap: "Water level record for well 327"
-# continuousWaterLevel(well = "327")
+continuousWaterLevel(well = "327")
+```
+
+```{r}
+#| label: tbl-327visits
+#| tbl-cap: "Site visit data for well 327"
+discreteVisitDataReactable(well = "327")
+```
+
+```{r}
+#| label: tbl-327loggers
+#| tbl-cap: "Logger deployment data for well 327"
+loggerWellDeploymentsReactable(well = "327")
 ```
 
 ### Wet Meadow 313 (Budd Creek)
 
-```{r 313}
+The record begins in August 2016 and is continuous through September 2023. A logger had been deployed during the first visit in July 2015; however, the crew observed during the next visit in August 2016 that the well and logger had been pulled out of the ground, possibly due to coyotes. Based on the temperature record from the logger, this happened within a week of the well installation, so the first year of data are unusable. There are periods in late summer and fall of 2016, 2018, 2019, 2020, 2021, and 2022 when the water level in the well dropped below the suspended logger. The logger was replaced in August 2022.
+
+```{r}
+#| label: fig-313plot
 #| fig-cap: "Water level record for well 313"
-# continuousWaterLevel(well = "313")
+continuousWaterLevel(well = "313")
+```
+
+```{r}
+#| label: tbl-313visits
+#| tbl-cap: "Site visit data for well 313"
+discreteVisitDataReactable(well = "313")
+```
+
+```{r}
+#| label: tbl-313loggers
+#| tbl-cap: "Logger deployment data for well 313"
+loggerWellDeploymentsReactable(well = "313")
 ```
 
 ### Fen 328 (Bridalveil)
 
-```{r 328}
+The record begins in late August 2016 and is continuous through late September 2023. There is a period in winter 2021 when the water level in the well dropped below the suspended logger. A new logger was deployed during the last visit in September 2023 and is currently logging.
+
+```{r}
+#| label: fig-328plot
 #| fig-cap: "Water level record for well 328"
-# continuousWaterLevel(well = "328")
+continuousWaterLevel(well = "328")
+```
+
+```{r}
+#| label: tbl-328visits
+#| tbl-cap: "Site visit data for well 328"
+discreteVisitDataReactable(well = "328")
+```
+
+```{r}
+#| label: tbl-328loggers
+#| tbl-cap: "Logger deployment data for well 328"
+loggerWellDeploymentsReactable(well = "328")
 ```
 
 ### Wet Meadow 322 (Porcupine Flat)
 
-```{r 322}
+The record begins in 
+
+```{r}
+#| label: fig-322plot
 #| fig-cap: "Water level record for well 322"
-# continuousWaterLevel(well = "322")
+continuousWaterLevel(well = "322")
+```
+
+```{r}
+#| label: tbl-322visits
+#| tbl-cap: "Site visit data for well 322"
+discreteVisitDataReactable(well = "322")
+```
+
+```{r}
+#| label: tbl-322loggers
+#| tbl-cap: "Logger deployment data for well 322"
+loggerWellDeploymentsReactable(well = "322")
 ```
 
 ### Fen 323 (Porcupine Flat)
 
-```{r 323}
+The record begins in 
+
+```{r}
+#| label: fig-323plot
 #| fig-cap: "Water level record for well 323"
-# continuousWaterLevel(well = "323")
+continuousWaterLevel(well = "323")
+```
+
+```{r}
+#| label: tbl-323visits
+#| tbl-cap: "Site visit data for well 323"
+discreteVisitDataReactable(well = "323")
+```
+
+```{r}
+#| label: tbl-323loggers
+#| tbl-cap: "Logger deployment data for well 323"
+loggerWellDeploymentsReactable(well = "323")
 ```

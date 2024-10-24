@@ -27,8 +27,10 @@ continuousWaterLevel <- function(well) {
                                     linewidth = Grade,
                                     group = 1)) +
     ggplot2::scale_color_manual(values = c("Dry" = "lightgray",
+                                           "Suspect" = "lightpink",
                                            "Unspecified" = "black")) +
-    ggplot2::scale_linewidth_manual(values = c("Dry" = 0.5,
+    ggplot2::scale_linewidth_manual(values = c("Dry" = 0.8,
+                                               "Suspect" = 0.8,
                                                "Unspecified" = 0.8)) +
     ggplot2::labs(x = "Date",
                   y = "Water Level (cm)") +
@@ -132,9 +134,13 @@ continuousBaroPressure <- function(site) {
   baro_plot <- ggplot2::ggplot(data = baro_data,
                                ggplot2::aes(x = DateTime,
                                             y = BaroPres_kPa)) +
-    ggplot2::geom_line(ggplot2::aes(group = 1)) +
-    ggplot2::scale_color_manual(values = "black") +
-    ggplot2::scale_linewidth_manual(values = 0.8) +
+    ggplot2::geom_line(ggplot2::aes(color = Grade,
+                                    linewidth = Grade,
+                                    group = 1)) +
+    ggplot2::scale_color_manual(values = c("Suspect" = "lightpink",
+                                           "Unspecified" = "black")) +
+    ggplot2::scale_linewidth_manual(values = c("Suspect" = 0.8,
+                                               "Unspecified" = 0.8)) +
     ggplot2::labs(x = "Date",
                   y = "Barometric Pressure (kPa)") +
     ggplot2::theme(legend.position = "none")

@@ -10,6 +10,22 @@ continuousWaterLevel <- function(well) {
   data_import <- readAndFilterData(data.name = "TimeseriesWaterLevel") |>
     dplyr::filter(Well %in% well)
 
+  discrete <- discreteVisitData() |>
+    dplyr::filter(WellNumber %in% well) |>
+    dplyr::mutate(ArrivalTime = dplyr::case_when(is.na(ArrivalTime) ~ "12:00",
+                                                 TRUE ~ ArrivalTime)) |>
+    dplyr::mutate(DateTime = as.POSIXct(paste(VisitDate, ArrivalTime), format = "%Y-%m-%d %H:%M")) |>
+    dplyr::rename(Well = WellNumber) |>
+    dplyr::mutate(WaterLevel_Arv_cm = -Arrival_DepthToWaterFromGround_cm) |>
+    dplyr::mutate(WaterLevel_Dep_cm = -Departure_DepthToWaterFromGround_cm) |>
+    dplyr::select(DateTime, WaterLevel_Arv_cm, WaterLevel_Dep_cm, Identifier, Park, Well) |>
+    tidyr::pivot_longer(cols = c("WaterLevel_Arv_cm", "WaterLevel_Dep_cm"), names_to = "MeasurementType", values_to = "WaterLevel_cm", values_drop_na = TRUE) |>
+    dplyr::mutate(MeasurementType = dplyr::case_when(MeasurementType == "WaterLevel_Arv_cm" ~ "Arrival",
+                                                     MeasurementType == "WaterLevel_Dep_cm" ~ "Departure",
+                                                     TRUE ~ MeasurementType)) |>
+    dplyr::mutate(Flag = as.factor("None")) |>
+    dplyr::select(DateTime, WaterLevel_cm, MeasurementType, Flag, Identifier, Park, Well)
+
   wl_data <- data_import |>
     dplyr::select(DateTime, WaterLevel_cm, Grade, Approval) |>
     dplyr::arrange(DateTime) |>
@@ -18,23 +34,38 @@ continuousWaterLevel <- function(well) {
     dplyr::mutate(DateTime = dplyr::case_when(is.na(DateTime) ~ as.POSIXct(Date),
                                             TRUE ~ DateTime)) |>
     dplyr::select(-Date) |>
-    dplyr::mutate(Grade = as.factor(Grade))
+    dplyr::mutate(Grade = dplyr::case_when(Grade == "Unspecified" ~ "None",
+                                           TRUE ~ Grade)) |>
+    dplyr::rename(Flag = Grade) |>
+    dplyr::mutate(Flag = as.factor(Flag))
 
-  wl_plot <- ggplot2::ggplot(data = wl_data,
-                             ggplot2::aes(x = DateTime,
-                                          y = WaterLevel_cm)) +
-    ggplot2::geom_line(ggplot2::aes(color = Grade,
-                                    linewidth = Grade,
+  wl_plot <- ggplot2::ggplot() +
+    ggplot2::geom_line(data = wl_data,
+                       ggplot2::aes(x = DateTime,
+                                    y = WaterLevel_cm,
+                                    color = Flag,
+                                    linewidth = Flag,
                                     group = 1)) +
     ggplot2::scale_color_manual(values = c("Dry" = "lightgray",
                                            "Suspect" = "lightpink",
-                                           "Unspecified" = "black")) +
+                                           "None" = "black")) +
     ggplot2::scale_linewidth_manual(values = c("Dry" = 0.8,
                                                "Suspect" = 0.8,
-                                               "Unspecified" = 0.8)) +
+                                               "None" = 0.8)) +
+    ggplot2::geom_point(data = discrete,
+                        ggplot2::aes(x = DateTime,
+                                     y = WaterLevel_cm,
+                                     fill = MeasurementType),
+                        color = "white",
+                        shape = 23,
+                        size = 4) +
+    ggplot2::scale_fill_manual(values = c("Arrival" = "skyblue",
+                                          "Departure" = "deepskyblue4")) +
     ggplot2::labs(x = "Date",
-                  y = "Water Level (cm)") +
-    ggplot2::theme(legend.position = "none")
+                  y = "Water Level (cm)",
+                  fill = "Measurement Type",
+                  color = "Flag") +
+    ggplot2::theme(legend.position = "bottom")
 
   return(wl_plot)
 }
@@ -59,7 +90,10 @@ continuousRawLevel <- function(well) {
     dplyr::mutate(DateTime = dplyr::case_when(is.na(DateTime) ~ as.POSIXct(Date),
                                               TRUE ~ DateTime)) |>
     dplyr::select(-Date) |>
-    dplyr::mutate(Grade = as.factor(Grade))
+    dplyr::mutate(Grade = dplyr::case_when(Grade == "Unspecified" ~ "None",
+                                           TRUE ~ Grade)) |>
+    dplyr::rename(Flag = Grade) |>
+    dplyr::mutate(Flag = as.factor(Flag))
 
   raw_plot <- ggplot2::ggplot(data = raw_data,
                               ggplot2::aes(x = DateTime,
@@ -94,7 +128,10 @@ continuousWaterTemperature <- function(well) {
     dplyr::mutate(DateTime = dplyr::case_when(is.na(DateTime) ~ as.POSIXct(Date),
                                               TRUE ~ DateTime)) |>
     dplyr::select(-Date) |>
-    dplyr::mutate(Grade = as.factor(Grade))
+    dplyr::mutate(Grade = dplyr::case_when(Grade == "Unspecified" ~ "None",
+                                           TRUE ~ Grade)) |>
+    dplyr::rename(Flag = Grade) |>
+    dplyr::mutate(Flag = as.factor(Flag))
 
   wt_plot <- ggplot2::ggplot(data = wt_data,
                              ggplot2::aes(x = DateTime,
@@ -129,21 +166,24 @@ continuousBaroPressure <- function(site) {
     dplyr::mutate(DateTime = dplyr::case_when(is.na(DateTime) ~ as.POSIXct(Date),
                                               TRUE ~ DateTime)) |>
     dplyr::select(-Date) |>
-    dplyr::mutate(Grade = as.factor(Grade))
+    dplyr::mutate(Grade = dplyr::case_when(Grade == "Unspecified" ~ "None",
+                                           TRUE ~ Grade)) |>
+    dplyr::rename(Flag = Grade) |>
+    dplyr::mutate(Flag = as.factor(Flag))
 
   baro_plot <- ggplot2::ggplot(data = baro_data,
                                ggplot2::aes(x = DateTime,
                                             y = BaroPres_kPa)) +
-    ggplot2::geom_line(ggplot2::aes(color = Grade,
-                                    linewidth = Grade,
+    ggplot2::geom_line(ggplot2::aes(color = Flag,
+                                    linewidth = Flag,
                                     group = 1)) +
     ggplot2::scale_color_manual(values = c("Suspect" = "lightpink",
-                                           "Unspecified" = "black")) +
+                                           "None" = "black")) +
     ggplot2::scale_linewidth_manual(values = c("Suspect" = 0.8,
-                                               "Unspecified" = 0.8)) +
+                                               "None" = 0.8)) +
     ggplot2::labs(x = "Date",
                   y = "Barometric Pressure (kPa)") +
-    ggplot2::theme(legend.position = "none")
+    ggplot2::theme(legend.position = "bottom")
 
   return(baro_plot)
 }

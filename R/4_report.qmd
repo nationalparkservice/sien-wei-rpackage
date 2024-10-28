@@ -54,28 +54,7 @@ There is one monitored well in DEPO.
 ```{r}
 #| label: tbl-depo_wells
 #| tbl-cap: "Well sites in DEPO"
-t <- siteInformation(park = "DEPO", type = "Well") |>
-  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
-  dplyr::relocate(WetlandName, .before = WetlandNumber) |>
-  dplyr::mutate(Type = dplyr::case_when(Type == "WetMeadow" ~ "Wet Meadow",
-                                        TRUE ~ Type))
-
-t |>
-  reactable::reactable(
-      sortable = TRUE,
-      filterable = TRUE,
-      compact = TRUE,
-      striped = TRUE,
-      bordered = TRUE,
-      highlight = TRUE,
-      resizable = TRUE,
-      columns = list(
-        Type = reactable::colDef(width = 120),
-        Longitude = reactable::colDef(width = 120)
-      ),
-      defaultColDef = reactable::colDef(
-        header = function(value) snakecase::to_title_case(value))
-      )
+siteInformationWellReactable(park = "DEPO")
 ```
 
 ### Baro Stations
@@ -85,26 +64,7 @@ SIEN has never deployed any barologgers in DEPO. Atmospheric pressure data come 
 ```{r}
 #| label: tbl-depo_baro
 #| tbl-cap: "Baro sites in DEPO"
-t <- siteInformation(park = "DEPO", type = "Baro") |>
-  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
-  dplyr::relocate(SiteName, .before = SiteShort) |>
-  dplyr::rename(SiteCode = SiteShort)
-
-t |>
-  reactable::reactable(
-      sortable = TRUE,
-      filterable = TRUE,
-      compact = TRUE,
-      striped = TRUE,
-      bordered = TRUE,
-      highlight = TRUE,
-      resizable = TRUE,
-      columns = list(
-        Longitude = reactable::colDef(width = 120)
-      ),
-      defaultColDef = reactable::colDef(
-        header = function(value) snakecase::to_title_case(value))
-      )
+siteInformationBaroReactable(park = "DEPO")
 ```
 
 ## Atmospheric Pressure Data
@@ -158,29 +118,7 @@ There are ten monitored wells in the annual panel at SEKI.
 ```{r}
 #| label: tbl-seki_wells
 #| tbl-cap: "Well sites in SEKI"
-t <- siteInformation(park = "SEKI", type = "Well") |>
-  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
-  dplyr::relocate(WetlandName, .before = WetlandNumber) |>
-  dplyr::mutate(Type = dplyr::case_when(Type == "WetMeadow" ~ "Wet Meadow",
-                                        TRUE ~ Type)) |>
-  dplyr::arrange(WetlandNumber, WellNumber)
-
-t |>
-  reactable::reactable(
-      sortable = TRUE,
-      filterable = TRUE,
-      compact = TRUE,
-      striped = TRUE,
-      bordered = TRUE,
-      highlight = TRUE,
-      resizable = TRUE,
-      columns = list(
-        Type = reactable::colDef(width = 120),
-        Longitude = reactable::colDef(width = 120)
-      ),
-      defaultColDef = reactable::colDef(
-        header = function(value) snakecase::to_title_case(value))
-      )
+siteInformationWellReactable(park = "SEKI")
 ```
 
 ### Baro Stations
@@ -190,26 +128,7 @@ SIEN has deployed three barologgers in SEKI. Additional atmospheric pressure dat
 ```{r}
 #| label: tbl-seki_baro
 #| tbl-cap: "Baro sites in SEKI"
-t <- siteInformation(park = "SEKI", type = "Baro") |>
-  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
-  dplyr::relocate(SiteName, .before = SiteShort) |>
-  dplyr::rename(SiteCode = SiteShort)
-
-t |>
-  reactable::reactable(
-      sortable = TRUE,
-      filterable = TRUE,
-      compact = TRUE,
-      striped = TRUE,
-      bordered = TRUE,
-      highlight = TRUE,
-      resizable = TRUE,
-      columns = list(
-        Longitude = reactable::colDef(width = 120)
-      ),
-      defaultColDef = reactable::colDef(
-        header = function(value) snakecase::to_title_case(value))
-      )
+siteInformationBaroReactable(park = "SEKI")
 ```
 
 ## Atmospheric Pressure Data
@@ -438,7 +357,7 @@ The record begins in July 2016 and is continuous through July 2023. There is a p
 
 ```{r}
 #| label: fig-348plot
-#| fig-cap: "Water level record for well 348. Lines in gray indicate periods when the water level in the well dropped below the suspended logger. Lines in pink indicate periods where the data are suspect and may not reflect accurate water level."
+#| fig-cap: "Water level record for well 348."
 continuousWaterLevel(well = "348")
 ```
 
@@ -515,29 +434,7 @@ There are eight monitored wells in the annual panel at YOSE.
 ```{r}
 #| label: tbl-yose_wells
 #| tbl-cap: "Well sites in YOSE"
-t <- siteInformation(park = "YOSE", type = "Well") |>
-  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
-  dplyr::relocate(WetlandName, .before = WetlandNumber) |>
-  dplyr::mutate(Type = dplyr::case_when(Type == "WetMeadow" ~ "Wet Meadow",
-                                        TRUE ~ Type)) |>
-  dplyr::arrange(WetlandNumber, WellNumber)
-
-t |>
-  reactable::reactable(
-      sortable = TRUE,
-      filterable = TRUE,
-      compact = TRUE,
-      striped = TRUE,
-      bordered = TRUE,
-      highlight = TRUE,
-      resizable = TRUE,
-      columns = list(
-        Type = reactable::colDef(width = 120),
-        Longitude = reactable::colDef(width = 120)
-      ),
-      defaultColDef = reactable::colDef(
-        header = function(value) snakecase::to_title_case(value))
-      )
+siteInformationWellReactable(park = "YOSE")
 ```
 
 ### Baro Stations
@@ -547,26 +444,7 @@ There are three primary barologgers operated and maintained by park staff at YOS
 ```{r}
 #| label: tbl-yose_baro
 #| tbl-cap: "Baro sites in YOSE"
-t <- siteInformation(park = "YOSE", type = "Baro") |>
-  dplyr::select(-c("Identifier", "Park", "Easting", "Northing")) |>
-  dplyr::relocate(SiteName, .before = SiteShort) |>
-  dplyr::rename(SiteCode = SiteShort)
-
-t |>
-  reactable::reactable(
-      sortable = TRUE,
-      filterable = TRUE,
-      compact = TRUE,
-      striped = TRUE,
-      bordered = TRUE,
-      highlight = TRUE,
-      resizable = TRUE,
-      columns = list(
-        Longitude = reactable::colDef(width = 120)
-      ),
-      defaultColDef = reactable::colDef(
-        header = function(value) snakecase::to_title_case(value))
-      )
+siteInformationBaroReactable(park = "YOSE")
 ```
 
 ## Atmospheric Pressure Data
@@ -645,7 +523,7 @@ loggerBaroDeploymentsReactable(site = "214")
 
 The earliest baro record begins in late July 2012 at BUGL and runs until late August 2024, with gaps or unusable data from August 2013 to June 2014 and from December 2018 to late August 2020. This second period can be filled with data from AHSC.
 
-The baro record at AHSC begins in September 2017 and runs until early August 2024, with a some questional data around February 2019 and a gap from October 2020 to late August 2022. The first period can be filled with data from ILLI and the second with data from BUGL.
+The baro record at AHSC begins in September 2017 and runs until early August 2024, with a some questionable data around February 2019 and a gap from October 2020 to late August 2022. The first period can be filled with data from ILLI and the second with data from BUGL.
 
 The baro record at ILLI begins in October 2015 and runs until late September 2023, with a unusable data from early September 2016 to October 2017. This period can be filled with data from BUGL.
 
@@ -747,7 +625,7 @@ loggerWellDeploymentsReactable(well = "327")
 
 ### Wet Meadow 313 (Budd Creek)
 
-The record begins in August 2016 and is continuous through September 2023. A logger had been deployed during the first visit in July 2015; however, the crew observed during the next visit in August 2016 that the well and logger had been pulled out of the ground, possibly due to coyotes. Based on the temperature record from the logger, this happened within a week of the well installation, so the first year of data are unusable. There are periods in late summer and fall of 2016, 2018, 2019, 2020, 2021, and 2022 when the water level in the well dropped below the suspended logger. The logger was replaced in August 2022.
+The record begins in August 2016 and is continuous through September 2023. A logger had been deployed during the first visit in July 2015; however, the crew observed during the next visit in August 2016 that the well and logger had been pulled out of the ground, possibly due to coyotes. Based on the temperature record from the logger, this happened within a week of the well installation, so the first year of data are unusable. There are periods in late summer and fall of 2016, 2018, 2019, 2020, 2021, and 2022 when the water level in the well dropped below the suspended logger. A new logger was deployed in August 2022 and is currently logging.
 
 ```{r}
 #| label: fig-313plot
@@ -791,7 +669,11 @@ loggerWellDeploymentsReactable(well = "328")
 
 ### Wet Meadow 322 (Porcupine Flat)
 
-The record begins in 
+The record begins in late August 2016. There are periods in late summer and fall of 2016, 2018, 2019, 2020, and 2022 when the water level in the well dropped below the suspended logger. 
+
+The first year of deployment from August 2016 to August 2017 may be considered suspect because the the data logger record cannot be strongly tied to any field readings. The logger was not deployed until a month after the well depth measurements were collected in July 2016. Additionally, the water table was noted as being 4 cm above the ground surface in July 2017, but no actual well depth measurements were collected during that visit or during the next visit in August 2017 to repair the well.
+
+There is a gap from August 2017 to September 2018 because the logger was accidentally not set to record data during that deployment. There is another gap from early December 2020 to August 2022 when the logger malfunctioned and was either recording obviously incorrect data or no data at all. A new logger was deployed in August 2022 and is currently logging.
 
 ```{r}
 #| label: fig-322plot
@@ -813,7 +695,7 @@ loggerWellDeploymentsReactable(well = "322")
 
 ### Fen 323 (Porcupine Flat)
 
-The record begins in 
+The record begins in August 2017 and is continuous through August 2024. There are periods in late summer and fall of 2018, 2019, 2020, 2021, and 2022 when the water level in the well dropped below the suspended logger. During the visit in early August 2023, there was a discrepancy of 15.5 cm between the arrival depth to water measurement and the departure depth to water measurement following repairs to the well, so there is some uncertainty for these field readings. The current logger has been deployed since August 2017. This logger may be nearing the end of its battery life and should be replaced during the next visit.
 
 ```{r}
 #| label: fig-323plot

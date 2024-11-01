@@ -21,7 +21,7 @@ get_data <- function(data.name) {
 #' @return List of tibbles
 #' @export
 #'
-readAquarius <- function(username = "aqreadonly", password = "aqreadonly") {
+readAquarius <- function(username, password) {
 
   timeseries$connect("https://aquarius.nps.gov/aquarius", username, password)
 

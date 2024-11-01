@@ -119,7 +119,7 @@ siteInformationWellReactable <-function(park) {
                                           TRUE ~ Type)) |>
     dplyr::arrange(WetlandNumber, WellNumber)
 
-  t |>
+  t <- t |>
     reactable::reactable(
       sortable = TRUE,
       filterable = TRUE,
@@ -151,7 +151,7 @@ siteInformationBaroReactable <- function(park) {
     dplyr::relocate(SiteName, .before = SiteShort) |>
     dplyr::rename(SiteCode = SiteShort)
 
-  t |>
+  t <- t |>
     reactable::reactable(
       sortable = TRUE,
       filterable = TRUE,
@@ -167,4 +167,14 @@ siteInformationBaroReactable <- function(park) {
         header = function(value) snakecase::to_title_case(value))
     )
   return(t)
+}
+
+fixLines <- function(plt) {
+  lapply(1:length(plt$x$data),
+         function(j) {
+           if(plt$x$data[[j]]$mode == "lines") {
+             plt$x$data[[j]]$showlegend <<- F
+           }
+         })
+  plt
 }

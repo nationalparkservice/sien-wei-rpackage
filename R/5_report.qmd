@@ -1,7 +1,10 @@
 ---
 title: "Well Data Report"
-subtitle: "Wetland Ecological Integrity Protocol"
-author: "Sierra Nevada Network Inventory and Monitoring Program"
+subtitle: |
+    | Wetland Ecological Integrity Protocol
+    | Sierra Nevada Network
+author: "Jennifer Bailard"
+date: today
 execute: 
   echo: false
 format:
@@ -59,7 +62,7 @@ siteInformationWellReactable(park = "DEPO")
 
 ### Baro Stations
 
-SIEN has never deployed any barologgers in DEPO. Atmospheric pressure data come from the weather station at Mammoth Yosemite Airport (available from [MesoWest website](https://mesowest.utah.edu/cgi-bin/droman/download_api2.cgi?stn=KMMH&hour1=17&min1=34&timetype=LOCAL&unit=0&graph=0)). 
+SIEN has never deployed any barologgers in DEPO. Atmospheric pressure data come from the weather station at Mammoth Yosemite Airport. 
 
 ```{r}
 #| label: tbl-depo_baro
@@ -73,6 +76,9 @@ siteInformationBaroReactable(park = "DEPO")
 
 The weather station record extends from January 2008 to the present with no gaps.
 
+Continuous barometric data are available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_DEPO_MesoWest-KMMH/DataSet/Atmos%20Pres/Baro/Interval/AllData). Original data are available to view and download from [MesoWest](https://mesowest.utah.edu/cgi-bin/droman/download_api2.cgi?stn=KMMH&hour1=17&min1=34&timetype=LOCAL&unit=0&graph=0).
+
+
 ```{r}
 #| label: fig-kmmh
 #| fig-cap: "Barometric pressure record for KMMH"
@@ -83,11 +89,13 @@ continuousBaroPressure(site = "KMMH")
 
 ### Wet Meadow 409 (Soda Springs)
 
-*Note: This well was originally numbered 409. It was renumbered to 337 in CHECK YEAR. However, it is still usually referred to as 409.*
+*Note: This well was originally numbered 409. It was renumbered to 337 in 2016. However, it is still usually referred to as 409.*
 
-The well levelogger record is continuous from late August 2014 to September 2024. There are no obvious problems with the record, although the logger was set to collect data once per day instead of once per hour from August 2023 to September 2024. The interval was reset to once per hour during the most recent visit in September 2024. All atmospheric pressure compensation data come from KMMH.
+The record begins in late August 2014 and is continuous through September 2024. The logger was accidentally set to collect data once per day instead of once per hour from August 2023 to September 2024. The interval was reset to once per hour during the most recent visit in September 2024. All atmospheric pressure compensation data come from KMMH.
 
-Water level data are also available to view [here](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_DEPO_Well-409/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
+There is some logger data from July 2009 to September 2010 and from October 2011 to December 2012. The logger was set to collect data every 15 minutes during both of these deployments, which caused the memory to become full in a little over a year. Since the site was only visited every two years, this led to gaps in the record between visits. The logger was changed to record once per hour in August 2014. Additionally, there are no documented depth to water measurements during this period. Without field measurements to which to tie the logger record, the offset applied to the data is only a guess and does not necessarily reflect actual conditions in the well with confidence.
+
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_DEPO_Well-409/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
 ```{r}
 #| label: fig-409plot
@@ -123,7 +131,7 @@ siteInformationWellReactable(park = "SEKI")
 
 ### Baro Stations
 
-SIEN has deployed three barologgers in SEKI. Additional atmospheric pressure data come from the weather station at State Lakes (available from [CDEC website](https://cdec.water.ca.gov/dynamicapp/staMeta?station_id=STL)). 
+SIEN has deployed three barologgers in SEKI. Additional atmospheric pressure data come from the weather station at State Lakes. 
 
 ```{r}
 #| label: tbl-seki_baro
@@ -136,6 +144,8 @@ siteInformationBaroReactable(park = "SEKI")
 ### Baro 306 (Shorty's Meadow)
 
 The record begins in July 2014. There is a gap from June 2015 to June 2016 because no barologger was deployed. The same barologger was deployed again in July 2016. The barologger was successfully downloaded in August 2020. The same barologger was recovered during the next site visit in September 2024 but was unable to be downloaded, likely due to a dead battery. The barologger is currently being shipped to the manufacturer for troubleshooting. A replacement barologger was deployed in September 2024 and is currently logging.
+
+Continuous barometric data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-02_Well-306/DataSet/Atmos%20Pres/Baro/Interval/AllData)
 
 ```{r}
 #| label: fig-306bplot
@@ -153,6 +163,8 @@ loggerBaroDeploymentsReactable(site = "306")
 
 The record begins in late August 2014 and is continuous through early September 2020, which is the last time the barologger was downloaded. While the two well leveloggers at the site were downloaded in 2021 and 2023, the barologger was not downloaded during these visits. The same barologger is currently deployed at the site. If the logger memory was not cleared during the last visit, then the logger memory is probably full, and the logger may not be recording data. The logger is also reaching end of its battery life.
 
+Continuous barometric data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-06_Well-315/DataSet/Atmos%20Pres/Baro/Interval/AllData)
+
 ```{r}
 #| label: fig-315bplot
 #| fig-cap: "Barometric pressure record for baro site 315"
@@ -169,6 +181,8 @@ loggerBaroDeploymentsReactable(site = "315")
 
 No useable atmospheric pressure data have been collected yet from this site. A Gold model barologger was deployed in September 2016. This logger was  programmed to collect baro data in units of water equivalent instead of pressure. This logger exhibited very large and suspect fluctuations for most of the record. Aside from the programming problem, communications with Solinst suggest problems could also have been due to the age of the logger or deployment in direct sunlight. A new barologger was deployed in September 2023. The site has not been revisited since then, so the new barologger has not yet been downloaded.
 
+Continuous barometric data are available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-01_Well-308/DataSet/Atmos%20Pres/Baro/Interval/AllData)
+
 ```{r, eval = FALSE}
 #| label: fig-308bplot
 #| fig-cap: "Barometric pressure record for baro site 308"
@@ -181,9 +195,11 @@ continuousBaroPressure(site = "308")
 loggerBaroDeploymentsReactable(site = "308")
 ```
 
-### State Lakes (STL CDEQ)
+### State Lakes (STL CDEC)
 
 This is a relatively new weather station installed by the Army Corps of Engineers near State Lakes. The record extends from October 2023 to the present with no gaps.
+
+Continuous barometric data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI_CDEC-STL/DataSet/Atmos%20Pres/Baro/Interval/AllData). Original data are available to view and download from [CDEC](https://cdec.water.ca.gov/dynamicapp/staMeta?station_id=STL).
 
 ```{r}
 #| label: fig-STLplot
@@ -200,6 +216,8 @@ Between early September 2020 and early October 2023, there is no baro logger rec
 ### Wet Meadow 308 (Lower Dusy Basin)
 
 The record begins in July 2015 and is continuous through September 2023. There are periods in late summer and fall of 2016, 2020, and 2021 when the water level in the well dropped below the suspended logger. The logger was left in place during the last visit in September 2023 and is currently collecting data.
+
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-01_Well-308/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
 ```{r}
 #| label: fig-308plot
@@ -223,6 +241,8 @@ loggerWellDeploymentsReactable(well = "308")
 
 The record begins in late September 2017 and is continuous through early March 2023, when the logger memory became full. Since the logger was not programmed to overwrite older data, it stopped recording at this time. A new logger was deployed during the last visit in September 2024.
 
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-02_Well-305/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
+
 ```{r}
 #| label: fig-305plot
 #| fig-cap: "Water level record for well 305"
@@ -244,6 +264,8 @@ loggerWellDeploymentsReactable(well = "305")
 ### Wet Meadow 306 (Shorty's Meadow)
 
 The record begins in July 2014. There is a gap from June 2015 to June 2016 because no logger was deployed. The same logger was deployed again in late June 2016. The logger was successfully downloaded in late July 2021. The same logger was recovered during the next site visit in September 2024 but was unable to be downloaded, likely due to a dead battery. The logger is currently being shipped to the manufacturer for troubleshooting. A new logger was deployed in September 2024 and is currently logging.
+
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-02_Well-306/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
 ```{r}
 #| label: fig-306plot
@@ -267,6 +289,8 @@ loggerWellDeploymentsReactable(well = "306")
 
 The record begins in June 2014 and is continuous through the end of December 2022. There are some periods in late summer and fall of 2021 and 2022 when the water level in the well dropped below the suspended logger. In January 2023, the well logger began exhibiting large drops and jumps, and the data became suspect. The same logger is currently deployed and is likely nearing a full memory and the end of its battery life. The logger should be replaced during the next visit.
 
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-03_Well-319/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
+
 ```{r}
 #| label: fig-319plot
 #| fig-cap: "Water level record for well 319"
@@ -288,6 +312,8 @@ loggerWellDeploymentsReactable(well = "319")
 ### Wet Meadow 320 (Silliman)
 
 The record begins in June 2016 and is continuous through mid January 2023. There are some periods in late summer and fall of 2021 and 2022 when the water level in the well dropped below the suspended logger. In January 2023, the memory became full and the logger stopped recording data, since it was not set to overwrite data. The logger was left in place during the last visit in August 2023. If the logger memory was not cleared, then the logger is  not collecting data right now due to a full memory and is also likely reaching end of its battery life.
+
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-03_Well-320/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
 ```{r}
 #| label: fig-320plot
@@ -311,6 +337,8 @@ loggerWellDeploymentsReactable(well = "320")
 
 The record begins in August 2014. There was a short period in late summer 2015 when the water level in the well dropped below the suspended logger. The logger was removed from the well in June 2016 because it could not be downloaded in the field. However, the logger was successfully downloaded in the office. A new logger was not deployed in the well until July 2017. This logger was last downloaded during the last visit in August 2021. There are some periods in summer 2021 when the water level in the well dropped below the suspended logger. The same logger is currently deployed and is likely nearing a full memory and the end of its battery life. The logger should be replaced during the next visit.
 
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-04_Well-310/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
+
 ```{r}
 #| label: fig-310plot
 #| fig-cap: "Water level record for well 310"
@@ -331,7 +359,9 @@ loggerWellDeploymentsReactable(well = "310")
 
 ### Fen 345 (Hay Meadow)
 
-The record begins in July 2014. The logger was removed from the well in May 2015 because it could not be downloaded in the field. A new logger was deployed during the next visit in July 2016. The water level was close to the ground surface for most of the record until summer 2021, when the water level dropped from July to September. Beginning in December 2021, the logger readings became erratic. Except for June and July 2022, there were large fluctuations in the record, and the fluctuations appeared inconsistent with the diurnal and longer-term signals in the barometric record. The logger was removed during the last visit in July 2023 because it could not be downloaded in the field. However, the logger was successfully downloaded in the office. A new logger was deployed during that visit and is currently logging.
+The record begins in July 2014. The logger was removed from the well in May 2015 because it could not be downloaded in the field. While the logger was later successfully downloaded in the office, it had been set to record in units of pressure (psi) instead of water column equivalent (cm) during its deployment. A new logger was deployed during the next visit in July 2016. The water level was close to the ground surface for most of the record until summer 2021, when the water level dropped from July to September. Beginning in December 2021, the logger readings became erratic. Except for June and July 2022, there were large fluctuations in the record, and the fluctuations appeared inconsistent with the diurnal and longer-term signals in the barometric record. The logger was removed during the last visit in July 2023 because it could not be downloaded in the field. However, the logger was successfully downloaded in the office. A new logger was deployed during that visit and is currently logging.
+
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-05_Well-345/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
 ```{r}
 #| label: fig-345plot
@@ -355,6 +385,8 @@ loggerWellDeploymentsReactable(well = "345")
 
 The record begins in July 2016 and is continuous through July 2023. There is a period in September 2021 when the water level in the well likely dropped below the suspended logger. Beginning in fall 2022, the record began to exhibit large fluctuations and drift upward above the level of the top of the well casing. These data are suspect and may not be usable. The logger was removed during the last visit in July 2023 because it could not be downloaded in the field. However, the logger was successfully downloaded in the office. A new logger was deployed during that visit and is currently logging.
 
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-05_Well-348/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
+
 ```{r}
 #| label: fig-348plot
 #| fig-cap: "Water level record for well 348."
@@ -375,11 +407,13 @@ loggerWellDeploymentsReactable(well = "348")
 
 ### Wet Meadow 314 (Lake South America)
 
-The record begins in August 2015. The logger deployed in August 2015 was set to record in units of pressure (psi) instead of water column equivalent (cm) during its entire deployment. This logger could not be downloaded in August 2020. The record for this logger ends in April 2019. It is unclear if some data were later successfully downloaded in the office, or if there was an undocumented visit to the site in April 2019. A new logger was deployed in September 2020, but there is no information on this deployment. A new logger was again deployed in September 2023 and is currently logging.
+The record begins in August 2015. The logger deployed in August 2015 (previously deployed at well 345 in SEKI) was set to record in units of pressure (psi) instead of water column equivalent (cm) during its entire deployment. This logger could not be downloaded in August 2020. The record for this logger ends in April 2019. It is unclear if some data were later successfully downloaded in the office, or if there was an undocumented visit to the site in April 2019. A new logger was deployed in September 2020, but there is no information on this deployment. A new logger was again deployed in September 2023 and is currently logging.
 
 There are a couple of concerns with this record. From November 2020 to May 2021, the record drifted nearly half a meter above the ground surface, well above the level of the top of the well casing. These data are suspect and may not be usable. Additionally, throughout the record, the logger exhibited large diurnal fluctuations during the summer, starting around the onset of snowmelt and tapering off in the fall. It is unclear what is causing these fluctuations or if they reflect actual conditions in the well.
 
 Lake South America is the highest elevation annual panel site monitored for this protocol. Factors in the local environment, such as prolonged cold, ice, or snow, may be affecting the deployed loggers and the quality of the record.
+
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-06_Well-314/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
 ```{r}
 #| label: fig-314plot
@@ -404,6 +438,8 @@ loggerWellDeploymentsReactable(well = "314")
 The record begins in September 2016 and is continuous through early September 2023. The same logger has been deployed for the entire period and is currently logging since the last visit in September 2023. This logger may be nearing the end of its battery life and should be replaced during the next visit.
 
 There were two periods where the record spiked far higher than the level of the top of the well casing. The first occurred in May and June 2017, and the second occurred in May and June 2023. These data may be due to effects on the logger from snowmelt during high snowpack years.
+
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_SEKI-06_Well-315/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
 ```{r}
 #| label: fig-315plot
@@ -459,7 +495,7 @@ The record also appeared to be slightly horizontally offset between early Septem
 
 From late November 2018 to late August 2019, the record exhibited numerous large offsets, during some periods on a daily basis. It is unclear what may have been causing the barologger to malfunction. Alternative records from other sites were used for barometric compensation during this time.
 
-Because this barologger is maintained by YOSE, there is no logger deployment information.
+Because this barologger is maintained by YOSE, there is no logger deployment information. Continuous barometric data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE_TUOL_BUGL/DataSet/Absolute%20Pressure/Baro/Interval/AllData).
 
 ```{r}
 #| label: fig-BUGLplot
@@ -473,7 +509,7 @@ The record begins in October 2015 and is continuous through September 2023.
 
 The record appeared to be slightly vertically offset between September 2016 and October 2017, lower than all the other years. A correction (0.65 kPa) was applied to the data during this period to be consistent with the other years. Additionally, there were unusually large diurnal fluctuations during this same period. It is unclear what may have been causing the barologger to malfunction. Alternative records from other sites were used for barometric compensation during this time.
 
-Because this barologger is maintained by YOSE, there is no logger deployment information.
+Because this barologger is maintained by YOSE, there is no logger deployment information. Continuous barometric data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE_MERC_ILLI/DataSet/Atmos%20Pres/Baro/Interval/AllData).
 
 ```{r}
 #| label: fig-ILLIplot
@@ -491,7 +527,7 @@ The record also appears to be slightly horizontally offset between early October
 
 During February 2019, the record exhibited noticeably larger than normal diurnal fluctuations, and possibly at other periods during the deployment from September 2018 to August 2019. Alternative records from other sites were used for barometric compensation during this time.
 
-Because this barologger is maintained by YOSE, there is no logger deployment information.
+Because this barologger is maintained by YOSE, there is no logger deployment information. Continuous barometric data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE_MERC_AHSC/DataSet/Atmos%20Pres/Baro/Interval/AllData).
 
 ```{r}
 #| label: fig-AHSCplot
@@ -506,6 +542,8 @@ The record begins in June 2015. However, since the file exports contain units of
 From September 2018 to early September 2023, the record exhibited wild fluctuations during the summer months that may have been due to the logger sensitivity being designed for underwater deployment or to the logger being deployed in direct sunlight, which can overheat the logger and introduce error.
 
 A replacement barologger was deployed in early September 2023 and is currently logging. The site has not been visited again since then, so this new logger has not yet been downloaded.
+
+Continuous barometric data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE-01_Well-214/DataSet/Atmos%20Pres/Baro/Interval/AllData).
 
 ```{r}
 #| label: fig-214bplot
@@ -535,6 +573,8 @@ Most sites in YOSE primarily use the record from BUGL for barometric compensatio
 
 The record begins in July 2015 and is continuous through early September 2023. The current logger has been deployed since July 2015 (originally at well 308 in SEKI) and has been logging since the last visit in September 2023. This logger may be nearing the end of its battery life and should be replaced during the next visit.
 
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE-01_Well-214/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
+
 ```{r}
 #| label: fig-214plot
 #| fig-cap: "Water level record for well 214"
@@ -559,6 +599,8 @@ The record begins in late August 2015 and is continuous through October 2022. Th
 
 ** Was this the well that was not found in 2023? Double-check.
 
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE-03_Well-224/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
+
 ```{r}
 #| label: fig-224plot
 #| fig-cap: "Water level record for well 224"
@@ -580,6 +622,8 @@ loggerWellDeploymentsReactable(well = "224")
 ### Wet Meadow 301 (Echo Creek)
 
 The record begins in July 2016 and is continuous through early November 2020. At this time, the logger began to malfunction and then stopped recording entirely. The logger was replaced in September 2023. The current logger has been deployed since August 2015 (originally at well 224 in YOSE) and has been logging since the last visit in September 2023. This logger may be nearing the end of its battery life and should be replaced during the next visit.
+
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE-04_Well-301/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
 ```{r}
 #| label: fig-301plot
@@ -605,6 +649,8 @@ loggerWellDeploymentsReactable(well = "301")
 
 The record begins in late July 2016 and runs through August 2022. A logger had been deployed during the first visit in July 2015; however, it had not been set to start recording data. The logger was launched during the next visit in July 2016. The logger could not be downloaded during the last visit in August 2023. However, the crew did not have a spare logger, so the same logger was left in place. The logger probably has a dead battery and is not collecting data. It should be replaced during the next visit.
 
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE-04_Well-327/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
+
 ```{r}
 #| label: fig-327plot
 #| fig-cap: "Water level record for well 327"
@@ -627,6 +673,8 @@ loggerWellDeploymentsReactable(well = "327")
 
 The record begins in August 2016 and is continuous through September 2023. A logger had been deployed during the first visit in July 2015; however, the crew observed during the next visit in August 2016 that the well and logger had been pulled out of the ground, possibly due to coyotes. Based on the temperature record from the logger, this happened within a week of the well installation, so the first year of data are unusable. There are periods in late summer and fall of 2016, 2018, 2019, 2020, 2021, and 2022 when the water level in the well dropped below the suspended logger. A new logger was deployed in August 2022 and is currently logging.
 
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE-06_Well-313/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
+
 ```{r}
 #| label: fig-313plot
 #| fig-cap: "Water level record for well 313"
@@ -648,6 +696,8 @@ loggerWellDeploymentsReactable(well = "313")
 ### Fen 328 (Bridalveil)
 
 The record begins in late August 2016 and is continuous through late September 2023. There is a period in winter 2021 when the water level in the well dropped below the suspended logger. A new logger was deployed during the last visit in September 2023 and is currently logging.
+
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE-07_Well-328/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
 ```{r}
 #| label: fig-328plot
@@ -675,6 +725,8 @@ The first year of deployment from August 2016 to August 2017 may be considered s
 
 There is a gap from August 2017 to September 2018 because the logger was accidentally not set to record data during that deployment. There is another gap from early December 2020 to August 2022 when the logger malfunctioned and was either recording obviously incorrect data or no data at all. A new logger was deployed in August 2022 and is currently logging.
 
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE-11_Well-322/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
+
 ```{r}
 #| label: fig-322plot
 #| fig-cap: "Water level record for well 322"
@@ -696,6 +748,8 @@ loggerWellDeploymentsReactable(well = "322")
 ### Fen 323 (Porcupine Flat)
 
 The record begins in August 2017 and is continuous through August 2024. There are periods in late summer and fall of 2018, 2019, 2020, 2021, and 2022 when the water level in the well dropped below the suspended logger. During the visit in early August 2023, there was a discrepancy of 15.5 cm between the arrival depth to water measurement and the departure depth to water measurement following repairs to the well, so there is some uncertainty for these field readings. The current logger has been deployed since August 2017. This logger may be nearing the end of its battery life and should be replaced during the next visit.
+
+Continuous water level data are also available to view and download from the [Aquarius Web Portal](https://irma.nps.gov/aqwebportal/Data/DataSet/Chart/Location/SIEN_WEI_YOSE-11_Well-323/DataSet/Water%20Level/BaroCompensated/Interval/AllData).
 
 ```{r}
 #| label: fig-323plot

@@ -1,5 +1,6 @@
 #devtools::install_github("nationalparkservice/imd-fetchaquarius")
 #devtools::install_github("wright13/imd-fetchaccess-package")
+
 library(fetchaquarius)
 library(fetchaccess)
 
@@ -14,12 +15,15 @@ get_data <- function(data.name) {
 
 #' Read continuous data from Aquarius
 #'
+#' @param username Aquarius username
+#' @param password Aquarius password
+#'
 #' @return List of tibbles
 #' @export
 #'
-readAquarius <- function() {
+readAquarius <- function(username = "aqreadonly", password = "aqreadonly") {
 
-  timeseries$connect("https://aquarius.nps.gov/aquarius", "aqreadonly", "aqreadonly")
+  timeseries$connect("https://aquarius.nps.gov/aquarius", username, password)
 
   data <- list()
   well_data <- tibble::tibble()
@@ -176,7 +180,7 @@ readAquarius <- function() {
 #'
 readAccess <- function() {
 
-  db <- "M:/STAFF/BailardJ/SIEN Detail/SIEN_Wells.accdb"
+  db <- "M:/STAFF/BailardJ/SIEN Detail/SIEN_Wells.accdb" # Update this file path with the location where you have saved the database on your computer
 
   data <-fetchaccess::fetchFromAccess(db)$data
 

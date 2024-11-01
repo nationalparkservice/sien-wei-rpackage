@@ -4,7 +4,12 @@
 \alias{readAquarius}
 \title{Read continuous data from Aquarius}
 \usage{
-readAquarius()
+readAquarius(username = "aqreadonly", password = "aqreadonly")
+}
+\arguments{
+\item{username}{Aquarius username}
+
+\item{password}{Aquarius password}
 }
 \value{
 List of tibbles

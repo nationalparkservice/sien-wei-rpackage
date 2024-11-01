@@ -35,6 +35,7 @@ continuousWaterLevel <- function(well) {
                                             TRUE ~ DateTime)) |>
     dplyr::select(-Date) |>
     dplyr::mutate(Grade = dplyr::case_when(Grade == "Unspecified" ~ "None",
+                                           is.na(Grade) ~ "None",
                                            TRUE ~ Grade)) |>
     dplyr::rename(Flag = Grade) |>
     dplyr::mutate(Flag = as.factor(Flag))
@@ -64,7 +65,8 @@ continuousWaterLevel <- function(well) {
     ggplot2::labs(x = "Date",
                   y = "Water Level (cm)",
                   fill = "Measurement Type",
-                  color = "Flag") +
+                  color = "Logger Flag",
+                  linewidth = "Logger Flag") +
     ggplot2::theme(legend.position = "bottom")
 
   return(wl_plot)
@@ -97,7 +99,7 @@ continuousRawLevel <- function(well) {
 
   raw_plot <- ggplot2::ggplot(data = raw_data,
                               ggplot2::aes(x = DateTime,
-                                          y = RawLevel_cm)) +
+                                           y = RawLevel_cm)) +
     ggplot2::geom_line(ggplot2::aes(group = 1)) +
     ggplot2::scale_color_manual(values = "black") +
     ggplot2::scale_linewidth_manual(values = 0.8) +
@@ -167,6 +169,7 @@ continuousBaroPressure <- function(site) {
                                               TRUE ~ DateTime)) |>
     dplyr::select(-Date) |>
     dplyr::mutate(Grade = dplyr::case_when(Grade == "Unspecified" ~ "None",
+                                           is.na(Grade) ~ "None",
                                            TRUE ~ Grade)) |>
     dplyr::rename(Flag = Grade) |>
     dplyr::mutate(Flag = as.factor(Flag))
@@ -178,11 +181,14 @@ continuousBaroPressure <- function(site) {
                                     linewidth = Flag,
                                     group = 1)) +
     ggplot2::scale_color_manual(values = c("Suspect" = "lightpink",
-                                           "None" = "black")) +
+                                           "None" = "black",
+                                           na.translate = FALSE)) +
     ggplot2::scale_linewidth_manual(values = c("Suspect" = 0.8,
                                                "None" = 0.8)) +
     ggplot2::labs(x = "Date",
-                  y = "Barometric Pressure (kPa)") +
+                  y = "Barometric Pressure (kPa)",
+                  color = "Logger Flag",
+                  linewidth = "Logger Flag") +
     ggplot2::theme(legend.position = "bottom")
 
   return(baro_plot)
@@ -289,7 +295,7 @@ siteMap <- function() {
   # width <- 700
   # height <- 700
 
-  sitemap <- leaflet::leaflet(coords # ,
+  sitemap <- leaflet::leaflet(coords |> dplyr::filter(Category %in% c("Well", "Baro")) # ,
                               # width = width # ,
                               # height = height
   ) |>
@@ -301,11 +307,11 @@ siteMap <- function() {
     leaflet::addCircleMarkers(lng = ~Longitude,
                               lat = ~Latitude,
                               popup = paste ("Identifier: ", coords$Identifier, "<br>",
-                                             "Wetland or Site Name: ", coords$WetlandName, "<br>",
-                                             "Well Number or Site Code: ", coords$SiteShort, "<br>",
+                                             "Site Name: ", coords$WetlandName, "<br>",
+                                             "Site Code: ", coords$SiteShort, "<br>",
                                              "Panel: ", coords$Panel, "<br>",
-                                             "Latitude (UTM): ", coords$Northing, "<br>",
-                                             "Longitude (UTM): ", coords$Easting, "<br>",
+                                             #"Latitude (UTM): ", coords$Northing, "<br>",
+                                             #"Longitude (UTM): ", coords$Easting, "<br>",
                                              "Latitude (Decimal Degrees): ", coords$Latitude, "<br>",
                                              "Longitude (Decimal Degrees): ", coords$Longitude),
                               radius = ~CategoryRadius,

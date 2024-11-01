@@ -2,13 +2,14 @@
 title: "Well Data Report"
 subtitle: |
     | Wetland Ecological Integrity Protocol
-    | Sierra Nevada Network
+    | Sierra Nevada Network I&M Program
 author: "Jennifer Bailard"
 date: today
 execute: 
   echo: false
 format:
   html:
+    embed-resources: true
     toc: true
     toc-location: left
 tbl-cap-location: top
@@ -38,13 +39,13 @@ Barometric pressure data may come from dedicated barologgers or from published w
 
 Manual barometric compensation follows a simple calculation provided by Solinst (available on the [Solinst website](https://www.solinst.com/products/dataloggers-and-telemetry/3001-levelogger-series/technical-bulletins/barometric-compensation.pdf)).
 
-| $Barometric compensated water level (cm) =$
+| Barometric compensated water level $(cm) =$
 |
-|       $Raw water column equivalent (cm) +$
+|       Raw water column equivalent $(cm) +$
 |
-|       $(\frac{Elevation of levelogger (ft) - Elevation of weather station (ft)}{826} \times 30.48(\frac{cm}{ft})) -$
+|       $($Elevation of levelogger $(ft) -$ Elevation of weather station $(ft))$ / $826 \times 30.48(\frac{cm}{ft}) -$
 |
-|       $(Barometric pressure (kPa) \times 10.1972 (\frac{cm}{kPa}))$
+|       Barometric pressure $(kPa)$ $\times 10.1972 (\frac{cm}{kPa})$
 
 # Devils Postpile National Monument(DEPO)
 

@@ -266,7 +266,8 @@ siteMap <- function() {
                   Elevation_m) |>
     dplyr::mutate(CategoryRadius = dplyr::case_when(Category == "Well" ~ 5,
                                                     Category == "Baro" ~ 3,
-                                                    TRUE ~ 3))
+                                                    TRUE ~ 3))|>
+    dplyr::filter(Category %in% c("Well", "Baro")) # Can remove once non-annual panel sites get added to database
 
   coords$Category <- factor(coords$Category, levels = c("Well", "Baro"))
   coords$Type <- factor(coords$Type, levels = c("Fen", "WetMeadow", "Barometric"))
@@ -295,9 +296,9 @@ siteMap <- function() {
   # width <- 700
   # height <- 700
 
-  sitemap <- leaflet::leaflet(coords |> dplyr::filter(Category %in% c("Well", "Baro")) # ,
-                              # width = width # ,
-                              # height = height
+  sitemap <- leaflet::leaflet(coords
+                              # , width = width
+                              # , height = height
   ) |>
     leaflet::addTiles(group = "Basic", urlTemplate = NPSbasic, attribution = NPSAttrib) |>
     leaflet::addTiles(group = "Imagery", urlTemplate = NPSimagery, attribution = NPSAttrib) |>
